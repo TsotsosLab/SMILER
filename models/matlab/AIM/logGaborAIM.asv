@@ -1,0 +1,26 @@
+function salmap = logGaborAIM(inimname)
+
+    %lum = imresize(rgb2gray(im2double(imread(inimname))),0.5);
+    lum = rgb2gray(im2double(imread(inimname)));
+    nscale = 3; norient = 6;
+    Lcounter=0;
+    logV1stackL = zeros(size(lum,1),size(lum,2),nscale*norient);
+    
+    [~,~,G=gaborconvolve(lum,nscale,norient,3,2,0.65,0);
+    
+        for i=1:nscale
+        for j=1:norient
+            Lcounter=Lcounter+1;
+            logV1stackL(:,:,Lcounter) = real(G{i,j}); % OPTION - USE REAL OR IMAGE HERE?
+        end
+        end
+        
+        [R, C, Z] = size(logV1stackL);
+        %salmap = selfinfo(logV1stackL,1);
+            
+        salmap = zeros(R,C);
+        for i = 1:1
+            tempsalmap = selfinfo(logV1stackL(:,:,i), 1);
+            salmap = salmap + tempsalmap;
+        end
+end

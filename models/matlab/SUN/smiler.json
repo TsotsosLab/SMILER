@@ -1,0 +1,20 @@
+{
+    "name": "SUN",
+    "long_name": "Saliency Using Natural Statistics",
+    "version": "1.0.0",
+    "citation": "Zhang, Lingyun, et al. \"SUN: A Bayesian framework for saliency using natural statistics.\" Journal of vision 8.7 (2008): 32.",
+    "model_type": "matlab",
+    "model_files": [],
+    "parameters": {
+	"sun_convolution": {
+		"default": false,
+		"description": "Flag to determine whether to use the convolution form of SUN (slower, but can take larger input) or the more optimized version.",
+		"valid_values": [true, false]
+	},
+	"pad_results": {
+		"default": true,
+		"description": "Flag to determine whether to pad the image back to its original size or not. When set to false all pixels for which the convolution is not fully defined are trimmed from the image border (removing the half-width of the filter kernels from each edge); when true these pixels are not removed and instead set to zero.",
+		"valid_values": [true, false]
+	}
+    }
+}

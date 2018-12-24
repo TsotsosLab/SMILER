@@ -1,0 +1,30 @@
+{
+    "name": "SAM",
+    "long_name": "Saliency Attentive Model",
+    "version": "1.0.0",
+    "notes": "Contains two variants: SAM-VGG (variant 0), and SAM-ResNet (variant 1).",
+    "citation": "Cornia, M., Baraldi, L., Serra, G. and Cucchiara, R., 2016. Predicting human eye fixations via an LSTM-based saliency attentive model. arXiv preprint arXiv:1611.09571.",
+    "model_type": "docker",
+    "model_files": [
+        "models/vgg16_weights_th_dim_ordering_th_kernels_notop.h5",
+        "models/resnet50_weights_th_dim_ordering_th_kernels_notop.h5",
+        "weights/sam-resnet_salicon_weights.pkl",
+        "weights/sam-vgg_salicon_weights.pkl"
+    ],
+    "docker_image": "tsotsoslab/smiler_sam",
+    "run_command": [
+        "python3",
+        "run_model.py",
+        "-m", "test",
+        "-v", "0",
+        "-i", "/opt/input_vol",
+        "-o", "/opt/output_vol"
+    ],
+    "shell_command": ["python3"],
+    "parameters": {
+        "network": {
+            "default": "SAM-VGG",
+            "valid_values": ["SAM-VGG", "SAM-ResNet"]
+        }
+    }
+}

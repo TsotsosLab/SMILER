@@ -1,0 +1,75 @@
+{
+    "name": "QSS",
+    "long_name": "Quaternion-Based Spectral Saliency",
+    "version": "1.0.0",
+    "citation": ["B. Schauerte, and R. Stiefelhagen,\"Quaternion-based Spectral Saliency Detection for Eye Fixation Prediction,\" in European Conference on Computer Vision (ECCV), 2012",
+        "B. Schauerte, and R. Stiefelhagen,\"Predicting Human Gaze using Quaternion DCT Image Signature Saliency and Face Detection,\" in IEEE Workshop on Applications in Computer Vision (WACV), 2012"
+    ],
+    "model_type": "matlab",
+    "model_files": [],
+    "parameters": {
+        "im_width": {
+            "default": 64,
+            "description": "The width scale of the image; if set to 0 the original image scale will be used.",
+            "valid_values": "Any integer greater than 0 to rescale, 0 to keep original dimension."
+        },
+        "im_height": {
+            "default": -1,
+            "description": "The height scale of the image; if set to 0 the original image scale will be used, and if set to -1 the height will be set by the original image aspect ratio and the im_width field.",
+            "valid_values": "Any integer greater than 0 to rescale, 0 to keep original dimension, and -1 to maintain image aspect ratio."
+        },
+        "qss_method": {
+            "default": "fft:whitening",
+            "description": "A number of different multi-channel spectral saliency methods are available in the QSS model. Note that some of the quaternion-based approaches require the quaternion toolbox (QTFM) to be available in MATLAB. For further information see the original papers and the descriptions provided in spectral_saliency_multichannel.m. Note that quat:dct:fast will override any size specifications in im_width and im_height, and operates on a fixed 64x48 size.",
+            "valid_values": ["fft:whitening", "fft:residual", "dct", "quat:fft:pqft", "quat:fft:eigenpqft", "quat:fft:eigensr", "quat:dct", "quat:dct:fast", "fft:whitening:multi", "fft:residual:multi", "quat:fft:pqft:multi", "quat:fft:eigenpqft:multi", "quat:fft:eigensr:multi", "quat:dct:multi"]
+        },
+        "do_channel_smoothing": {
+            "default": false,
+            "description": "Flag to turn on or off smoothing at the channel level.",
+            "valid_values": [true, false]
+
+        },
+        "ch_smooth_size": {
+            "default": 9,
+            "description": "The size of the smoothing kernel for channel smoothing, only used when do_channel_smoothing is set to true.",
+            "valid_values": "Integer greater than 0"
+
+        },
+        "ch_smooth_std": {
+            "default": 2.5,
+            "description": "The standard deviation of the smoothing kernel for channel smoothing, only used when do_channel_smoothing is set to true.",
+            "valid_values": "Any number greater than 0"
+
+        },
+        "channel_normalization": {
+            "default": true,
+            "description": "Flag to turn on or off channel normalization prior to channel integration. When on channels are scaled linearly between 0 and 1.",
+            "valid_values": [true, false]
+
+        },
+        "do_downscaling": {
+            "default": false,
+            "description": "Flag to determine whether downscaling (true) or upscaling (false) is used to create the different image scales.",
+            "valid_values": [true, false]
+
+        },
+        "nscales": {
+            "default": 2,
+            "description": "The number of scales at which the analysis should be run.",
+            "valid_values": "An integer greater than or equal to 1."
+
+        },
+        "scale_factor": {
+            "default": 1.2,
+            "description": "The factor by which the scale changes for each scale in nscales.",
+            "valid_values": "A number greater than 1."
+
+        },
+        "residual_filter_length": {
+            "default": 3,
+            "description": "Size of the averaging filter used in the Spectrum Residual approach. Not used in all qss_method specifications.",
+            "valid_values": "An integer greater than 0."
+
+        }
+    }
+}

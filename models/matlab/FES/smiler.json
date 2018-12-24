@@ -1,0 +1,35 @@
+{
+    "name": "FES",
+    "long_name": "Fast and Efficient Saliency",
+    "version": "1.0.0",
+    "citation": "Tavakoli, Hamed Rezazadegan, Esa Rahtu, and Janne Heikkila (2011) Fast and efficient saliency detection using sparse sampling and kernel density estimation. In Scandinavian Conference on Image Analysis, pp. 666-675",
+    "model_type": "matlab",
+    "model_files": [],
+    "parameters": {
+        "pScale": {
+		"default": [8, 8, 8],
+		"description": "precision scale: each element specifies for a given scale the number of samples for center-surround. Length of the list must match the length of sScale.",
+		"valid_values": "list of integers >= 1"
+	},
+        "sScale": {
+		"default": [13, 25, 38],
+		"description": "size scale: each element specifies for a given scale the size of the surround (radius from the center point). Length of the list must match the length of pScale.",
+		"valid_values": "list of integers >= 1"
+	},
+        "surround_sigma": {
+		"default": 10,
+		"description": "Standard deviation of Gaussian kernels in the surround",
+		"valid_values": "int >= 1"
+	},
+        "center_sigma": {
+		"default": 1,
+		"description": "Standard deviation of Gaussian kernels in the center",
+		"valid_values": "int >= 1"
+	},
+        "attenuation_factor": {
+		"default": 30,
+		"description": "The final saliency map is raised to the power of alpha to highlight salient areas better",
+		"valid_values": "int >= 1"
+	}
+    }
+}

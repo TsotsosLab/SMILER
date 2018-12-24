@@ -1,0 +1,14 @@
+{
+    "name": "This is where the short name which SMILER will use to refer to the model is specified",
+    "long_name": "This is where the full model name is given",
+    "version": "This specifies the model version within SMILER",
+    "citation": "This provides citation information for the model",
+    "model_type": "matlab",
+    "parameters": {
+        "model_parameter": {
+            "default": "default value",
+            "description": "A description of what this parameter does goes here.",
+            "valid_values": "Either the set of values which the parameter can take or a valid range is specified here."
+        }
+    }
+}

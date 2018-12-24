@@ -1,0 +1,22 @@
+{
+    "name": "gaussian",
+    "long_name": "Centered Gaussian Model",
+    "version": "1.0.0",
+    "notes": "The Centered Gaussian Model is an invariant model that overlays a centered Gaussian over images independent of the image content.",
+    "citation": "None.",
+    "model_type": "matlab",
+    "invariant": true,
+    "model_files": [],
+    "parameters": {
+        "sigma": {
+		"default": 0.1,
+		"description": "The standard deviation of the Gaussian prior, expressed as a fraction of the image dimensions.",
+		"valid_values": "Any number between 0 and 1."
+	},
+        "is_square": {
+		"default": false,
+		"description": "Boolean flag. When true, the Gaussian will have pixel magnitude based on the major axis of the image with equal vertical and horizontal standard deviations. When false, the Gaussian will scale the standard deviations to be a proportion of each image dimension independently.",
+		"valid_values": ["true", "false"]
+	}
+    }
+}

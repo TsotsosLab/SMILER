@@ -1,0 +1,20 @@
+{
+    "name": "DVAP",
+    "long_name": "Deep Visual Attention Prediction",
+    "version": "1.0.0",
+    "citation": "Wenguan Wang, Jianbing Shen \"Deep Visual Attention Prediction\" TIP (2018).",
+    "model_type": "docker",
+    "model_files": [
+        "models/attention_final",
+        "models/attention_test.prototxt",
+        "models/model.mat",
+        "models/train_val.prototxt"
+    ],
+    "docker_image": "tsotsoslab/smiler_dvap",
+    "run_command": [
+        "python",
+        "run_model.py"
+    ],
+    "shell_command": ["python"],
+    "parameters": {}
+}

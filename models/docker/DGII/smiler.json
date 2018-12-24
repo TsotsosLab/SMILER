@@ -1,0 +1,20 @@
+{
+    "name": "DGII",
+    "long_name": "DeepGaze II",
+    "version": "1.0.0",
+    "citation": "Kümmerer, Matthias, Thomas SA Wallis, and Matthias Bethge. \"DeepGaze II: Reading fixations from deep features trained on object recognition.\" arXiv preprint arXiv:1610.01563 (2016).",
+    "model_type": "docker",
+    "model_files": [
+        "DeepGazeII.ckpt.index",
+        "DeepGazeII.ckpt.data-00000-of-00001",
+        "DeepGazeII.ckpt.meta",
+        "centerbias.npy"
+    ],
+    "docker_image": "tsotsoslab/smiler_dgii",
+    "run_command": [
+        "python3",
+        "run_model.py"
+    ],
+    "shell_command": ["python3"],
+    "parameters": {}
+}

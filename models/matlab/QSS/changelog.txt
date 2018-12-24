@@ -1,0 +1,54 @@
+10 Aug 2011
+- added the quaternion-based multichannel saliency calculation
+
+17 Aug 2011 
+- temporarily removed the Quaternion support (will be added again, soon)
+
+02 Nov 2011 
+- added the quaternion support again
+- added quaternion DCT signatures and saliency based on DCT image signatures
+- added another ICOPP conversion
+- added a visualization for quaternion images
+- added a README.txt
+
+02 Nov 2011 
+- fix
+
+03 Nov 2011 
+- changed the default parameters
+
+03 Nov 2011 
+- added an efficient C/C++ implementation of the QDCT image signatures 
+- added an example.m file for a simple example (including an example image)
+
+09 Dec 2011 
+- updated the documentation
+
+13 Dec 2011 
+- fixed an if-statement
+
+15 Dec 2011 
+- C/C++ implementation now compiles without problems under Windows (MS Visual Studio Compiler / Windows SDK 7.1)
+
+01 Jul 2012
+- added EigenPQFT and EigenSR algorithms
+- added two saliency algorithms by Achanta et al.
+- added process_folder.m
+- rewrote example.m
+- QDCT .mex-binaries can now be found on my website (see README.txt)
+
+03 Sep 2012
+- added imconvert.m (colorspace conversion and weighting)
+- added multi-scale routines (I know that the code is not nice, but I can't find the time to clean it)
+- added get_additional_files.m
+
+01 Oct 2012
+- added reshape_spectral_image.m
+- minor updates and fixes
+
+25 Oct 2012
+- added a simple GPU benchmark routine
+- minor change in imconvert.m
+
+04 Jan 2014
+- integrated LDRC

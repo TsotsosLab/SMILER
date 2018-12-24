@@ -1,0 +1,11 @@
+{
+    "name": "CAS",
+    "long_name": "Context Aware Saliency",
+    "version": "1.0.0",
+    "citation": "Stas Goferman, Lihi Zelnik-Manor, and Ayellet Tal (2010). Context-Aware Saliency Detection. CVPR",
+    "notes": "Code based on the open-source implementation by Jyun-Fan Tsai and Kai-Jeuh Chang due to incompatibility of original CAS code with SMILER operation. CAS resizes the image to have a maximum dimension of 520 pixels; SMILER automatically resizes the output map to the original size, but this introduces implicit smoothing to the map. CAS internally converts from RGB to LAB space, so passing input in another colour space may produce unexpected results.",
+    "model_type": "matlab",
+    "model_files": [],
+    "parameters": {
+    }
+}

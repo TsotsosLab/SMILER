@@ -1,0 +1,15 @@
+{
+    "name": "AIM",
+    "long_name": "Attention by Information Maximization",
+    "version": "1.0.0",
+    "citation": "N.D.B. Bruce and J.K. Tsotsos (2006). Saliency Based on Information Maximization. Proc. Neural Information Processing Systems (NIPS)",
+    "model_type": "matlab",
+    "model_files": [],
+    "parameters": {
+        "AIM_filters": {
+            "default": "21jade950.mat",
+            "description": "The feature filter set to be used by the AIM algorithm. In the form [size][name][info], where each filter is size by size in dimension, name is the ICA algorithm used to derive the filters, and info provides a measure of the retained information (higher numbers correspond to more filters).",
+            "valid_values": ["21infomax[900,950,975,990,995,999].mat", "21jade950.mat", "31infomax[950,975,990].mat", "31jade[900,950].mat"]
+        }
+    }
+}

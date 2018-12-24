@@ -1,0 +1,10 @@
+{
+    "name": "DVA",
+    "long_name": "Dynamic Visual Attention",
+    "version": "1.0.0",
+    "citation": "Hou, Xiaodi, and Liqing Zhang. \"Dynamic visual attention: Searching for coding length increments.\" Advances in neural information processing systems. 2008.",
+    "model_type": "matlab",
+    "model_files": [],
+    "parameters": {
+    }
+}

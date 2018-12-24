@@ -1,0 +1,4 @@
+model/models/vgg16_weights_th_dim_ordering_th_kernels_notop.h5
+model/models/resnet50_weights_th_dim_ordering_th_kernels_notop.h5
+model/weights/sam-resnet_salicon_weights.pkl
+model/weights/sam-vgg_salicon_weights.pkl

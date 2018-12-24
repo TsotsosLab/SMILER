@@ -1,0 +1,10 @@
+{
+    "name": "RARE2012",
+    "long_name": "RARE2012",
+    "version": "1.0.0",
+    "citation": "N. Riche, M. Mancas, M. Duvinage, M. Mibulumukini, B. Gosselin, and T. Dutoit. (2013) RARE2012: A multi-scale rarity-based saliency detection with its comparative statistical analysis. Signal Processing: Image Communication, 28:6, 642–658",
+    "notes": "Relies on precompiled .p file; may not be compatible with all versions of MATLAB.",
+    "model_type": "matlab",
+    "model_files": [],
+    "parameters": {}
+}

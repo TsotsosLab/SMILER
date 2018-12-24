@@ -1,0 +1,15 @@
+{
+    "name": "IMSIG",
+    "long_name": "Image Signature",
+    "version": "1.0.0",
+    "citation": "X. Hou, J. Harel, and C. Koch. Image signature: Highlighting sparse salient regions. IEEE Transactions on Pattern Analysis and Machine Intelligence, 34:194201, 2012.",
+    "model_type": "matlab",
+    "model_files": [],
+    "parameters": {
+        "mapWidth": {
+		"default": 64,
+		"description": "The size of the saliency map before scaling it back to the original image size.",
+		"valid_values": "Any integer greater than 0."
+	}
+    }
+}

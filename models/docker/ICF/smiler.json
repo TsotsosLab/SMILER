@@ -1,0 +1,20 @@
+{
+    "name": "ICF",
+    "long_name": "Intensity Contrast Features",
+    "version": "1.0.0",
+    "citation": "Kümmerer, Matthias, Thomas SA Wallis, Leon A. Gatys, and Matthias Bethge. \"Understanding Low- and High-Level Contributions to Fixation Prediction.\" The IEEE International Conference on Computer Vision (ICCV) (2017).",
+    "model_type": "docker",
+    "model_files": [
+        "ICF.ckpt.index",
+        "ICF.ckpt.data-00000-of-00001",
+        "ICF.ckpt.meta",
+        "centerbias.npy"
+    ],
+    "docker_image": "tsotsoslab/smiler_dgii",
+    "run_command": [
+        "python3",
+        "run_model.py"
+    ],
+    "shell_command": ["python3"],
+    "parameters": {}
+}

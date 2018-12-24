@@ -1,0 +1,71 @@
+{
+    "name": "IKN",
+    "long_name": "Itti-Koch-Niebur",
+    "version": "1.0.0",
+    "notes": "This implementation of the IKN model is based on the code released as a bundle with the GBVS model implemented by J. Harel. It includes a number of performance tweaks and optimizations not documented in the original 1998 paper, but rather reflects one of the more widely used implementations. It relies on files included in the GBVS model folder.",
+    "citation": "L. Itti, C. Koch, and E. Niebur (1998). A Model of Saliency-Based Visual Attention for Rapid Scene Analysis. IEEE Transactions on Pattern Analysis and Machine Intelligence. 20:1254-1259",
+    "model_type": "matlab",
+    "model_files": [],
+    "parameters": {
+        "channels": {
+		"default": "CIO",
+		"description": "Specification of the feature channels to use in the saliency calculation. C = Color, I = Intensity, O = Orientation, R = contRast, F = Flicker, M = Motion. Note that by default the C channel will be based on DKL space, unless a non-default value of color_space is set.",
+		"valid_values": "Any substring of CIORD (in any order). F and M currently "
+	},
+        "colorWeight": {
+		"default": 1,
+		"description": "Weight of the C channel; channel weights are relative",
+		"valid_values": "Any positive number"
+	},
+        "intensityWeight": {
+		"default": 1,
+		"description": "Weight of the I channel; channel weights are relative",
+		"valid_values": "Any positive number"
+	},
+        "orientationWeight": {
+		"default": 1,
+		"description": "Weight of the O channel; channel weights are relative",
+		"valid_values": "Any positive number"
+	},
+        "flickerWeight": {
+		"default": 1,
+		"description": "Weight of the F channel; channel weights are relative",
+		"valid_values": "Any positive number"
+	},
+        "motionWeight": {
+		"default": 1,
+		"description": "Weight of the M channel; channel weights are relative",
+		"valid_values": "Any positive number"
+	},
+        "gaborangles": {
+		"default": [0, 45, 90, 135],
+		"description": "Angles of Gabor filters",
+		"valid_values": "A list of angles in degrees."
+	},
+        "contrastwidth": {
+		"default": 0.1,
+		"description": "Length over which luminance variance is calculated for the contrast channel specified as a fraction of image width. Larger values will give smoother contrast maps.",
+		"valid_values": "A number between 0 and 1."
+	},
+        "flickerNewFrameWt": {
+		"default": 1,
+		"description": "A parameter to adjust how quickly frame information is updated to calculate flicker (which is the absolute difference between the current frame and the previous frame estimate). For value w, previous frame estimate becomes w*(current frame) + (1-w)*(previous estimate).",
+		"valid_values": "A number between 0 and 1, inclusive."
+	},
+        "motionAngles": {
+		"default": [0, 45, 90, 135],
+		"description": "Angles of motion filters",
+		"valid_values": "A list of angles in degrees."
+	},
+        "ittiCenterLevels": {
+		"default": [2, 3],
+		"description": "The scales for center maps when calculating center-surround",
+		"valid_values": "A list of spatial scales."
+	},
+        "ittiDeltaLevels": {
+		"default": [2],
+		"description": "The delta used to form the surround in the center-surround calculation. Note than [2,3] is more faithful to the original algorithm, but may cause problems for smaller input images.",
+		"valid_values": "A list of spatial scales."
+	}
+    }
+}

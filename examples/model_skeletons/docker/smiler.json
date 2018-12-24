@@ -1,0 +1,23 @@
+{
+    "name": "The short name of the model.",
+    "long_name": "The full model name of the model.",
+    "version": "Model version within SMILER",
+    "citation": "Citation information.",
+    "model_type": "docker",
+    "model_files": [
+        "If there are model prerequisite files (e.g. network weights), put them here."
+    ],
+    "docker_image": "The docker image your model uses. Either built locally by you or available on docker hub.",
+    "run_command": [
+        "python",
+        "run_model.py"
+    ],
+    "shell_command": ["python"],
+    "parameters": {
+        "model_parameter": {
+            "default": "default value",
+            "description": "A description of what this parameter does.",
+            "valid_values": "Either the set of values which the parameter can take or a valid range is specified here."
+        }
+    }
+}

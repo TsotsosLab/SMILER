@@ -1,0 +1,271 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+SMILER: Saliency Model Implementation Library for Experimental Research.
+"""
+
+import sys
+import os
+import subprocess
+
+import click
+
+HERE_PATH = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(os.path.join(HERE_PATH, 'smiler_tools'))
+
+from smiler_tools.config import SmilerConfig
+from smiler_tools.models import ModelManager
+from smiler_tools.experiment import Experiment
+from smiler_tools import utils
+
+model_manager = ModelManager(os.path.join(HERE_PATH, "models"))
+config = SmilerConfig(os.path.join(HERE_PATH, "config.json"))
+
+if os.getuid() is 0:
+    print("ERROR: Don't run SMILER as root!")
+    exit(10)
+
+
+@click.group()
+def cli():
+    pass
+
+
+########################################
+# Download and Clean
+
+
+@cli.command()
+@click.option(
+    '-m', '--models', help="List of models to set up prerequisites for.")
+def download(models):
+    """Downloads model prerequisites."""
+    if models:
+        try:
+            selected_models = model_manager.get_matching(models)
+        except ValueError as e:
+            print(e)
+            return
+    else:
+        selected_models = model_manager.get_matching("all")
+
+    for selected_model in selected_models:
+        click.echo("Setting up: {}".format(selected_model.name))
+        selected_model.maybe_run_setup()
+        if selected_model.model_type == "docker":
+            selected_model.pull_latest_image()
+
+
+@cli.command()
+@click.confirmation_option(
+    prompt=
+    "Are you sure you want to delete all Docker images and downloaded files?")
+def clean():
+    """Deletes built images and downloaded files."""
+    click.echo('Cleaning images...')
+    output_str = subprocess.check_output(['sudo', 'docker', 'images'])
+    ids = [
+        line.split()[2] for line in output_str.strip().split('\n')[1:]
+        if 'tsotsoslab/smiler_' in line
+    ]
+    rc = subprocess.call(['sudo', 'docker', 'rmi'] + ids)
+
+    click.echo('Deleting downloaded files...')
+    for model in model_manager.get_matching('all'):
+        model.remove_model_files()
+
+
+########################################
+# Run
+
+
+@cli.command()
+@click.option('-m', '--models', help="List of models to run.")
+@click.option(
+    '-e',
+    '--experiment-path',
+    type=click.File('rb'),
+    help="Optional YAML Experiment file.")
+@click.option(
+    '-r',
+    '--recursive',
+    is_flag=True,
+    help="Recursively process input directory.")
+@click.option(
+    '-o',
+    '--overwrite',
+    is_flag=True,
+    help="Overwrite existing images in output directory.")
+@click.option(
+    '-v',
+    '--verbose',
+    is_flag=True,
+    help="Verbose mode and debugging messages.")
+@click.option(
+    '--matlab-startup',
+    default="-nodesktop",
+    help="String to pass to the MATLAB engine startup.")
+@click.argument('in_dir', type=click.Path(exists=True), required=False)
+@click.argument('out_dir', type=click.Path(), required=False)
+def run(experiment_path, recursive, overwrite, verbose, matlab_startup, models,
+        in_dir, out_dir):
+    """Runs models on images in a directory."""
+
+    config.parameter_map.set("recursive", recursive)
+    config.parameter_map.set("overwrite", overwrite)
+    config.parameter_map.set("verbose", verbose)
+    config.parameter_map.set("matlab_startup", matlab_startup)
+    config.parameter_map.set("uid", os.getuid())
+    config.parameter_map.set("gid", os.getgid())
+
+    experiment = Experiment(model_manager, config.parameter_map)
+
+    if not experiment_path and not models:
+        click.echo("ERROR: No model provided!")
+        click.echo(
+            "Add either -m \"model_name1, model_name2, ...\" or -e /path/to/experiment.yaml"
+        )
+        return 64
+    elif experiment_path and models:
+        click.echo("ERROR: Provide either -e option or -m option, not both!")
+        return 64
+    elif experiment_path:
+        try:
+            experiment.set_from_yaml(experiment_path)
+        except ValueError as e:
+            print(str(e))
+            exit(64)
+    elif models:
+        if in_dir is None or out_dir is None:
+            click.echo(
+                "ERROR: need to supply input and output dir when using the -m flag."
+            )
+            exit(64)
+
+        real_in_dir = os.path.realpath(in_dir)
+        real_out_dir = os.path.realpath(out_dir)
+
+        if not os.path.isdir(real_in_dir):
+            click.echo("ERROR: '{}' is not a directory!".format(real_in_dir))
+            return 64
+
+        if not os.path.exists(real_out_dir):
+            os.makedirs(real_out_dir)
+        elif not os.path.isdir(real_out_dir):
+            click.echo("ERROR: '{}' is not a directory!".format(real_out_dir))
+            return 64
+
+        try:
+            experiment.set_from_models_string(models, real_in_dir,
+                                              real_out_dir)
+        except ValueError as e:
+            print(str(e))
+            exit(64)
+
+    experiment.run()
+
+
+@cli.command()
+@click.argument('model')
+def shell(model):
+    """Runs model shell interface."""
+    try:
+        selected_model = model_manager.get(model)
+    except ValueError as e:
+        print(e)
+        return
+    selected_model.shell()
+
+
+########################################
+# Info
+
+
+@cli.command()
+@click.argument('model_name', required=False)
+@click.option(
+    '-p',
+    '--parameters',
+    is_flag=True,
+    help="Lists information on the global SMILER model parameters.")
+def info(model_name, parameters):
+    """Provides information on SMILER models and parameters."""
+    if parameters:
+        click.echo('Global Parameters:')
+        utils.pretty_print_parameters(config.parameter_map.get_parameters())
+        click.echo()
+        return
+
+    if model_name:
+        if model_name.lower() in model_manager.MODEL_COLLECTIONS:
+            utils.print_pretty_header(model_name)
+            click.echo()
+            click.echo("Collection: {}".format(
+                model_manager.MODEL_COLLECTIONS[model_name.lower()]))
+            click.echo()
+            click.echo("Contains: {}".format(", ".join([
+                model.name for model in model_manager.get_matching(model_name)
+            ])))
+        else:
+            try:
+                model = model_manager.get(model_name)
+            except ValueError:
+                click.echo("ERROR: Unknown model: {}".format(model_name))
+                return
+
+            utils.print_pretty_header(u"{}: '{}'".format(
+                model.name, model.long_name))
+            click.echo()
+            click.echo(u"Version: {}".format(model.version))
+            click.echo()
+            click.echo(u"Citation: {}".format(model.citation))
+            click.echo()
+            click.echo(u"Path: {}".format(model.path))
+            if model.parameter_map:
+                utils.pretty_print_parameters(
+                    model.parameter_map.get_parameters())
+            if model.notes:
+                click.echo()
+                click.echo(u"Notes: {}".format(model.notes))
+    else:
+        max_width = 12
+
+        click.echo('Model Collections:')
+        collection_names = list(model_manager.MODEL_COLLECTIONS.keys())
+        collection_names.sort()
+        for name in collection_names:
+            click.echo('    {}{}'.format(
+                name.ljust(max_width), model_manager.MODEL_COLLECTIONS[name]))
+
+        click.echo('MATLAB Models:')
+        matlab_models = model_manager.get_matching('matlab')
+        matlab_models.sort(key=lambda x: x.name)
+        for model in matlab_models:
+            click.echo('    {}{}'.format(
+                model.name.ljust(max_width), model.long_name))
+
+        click.echo('Docker Models:')
+        docker_models = model_manager.get_matching('docker')
+        docker_models.sort(key=lambda x: x.name)
+        for model in docker_models:
+            click.echo('    {}{}'.format(
+                model.name.ljust(max_width), model.long_name))
+
+        click.echo('Invariant Models:')
+        docker_models = model_manager.get_matching('invariant')
+        docker_models.sort(key=lambda x: x.name)
+        for model in docker_models:
+            click.echo('    {}{}'.format(
+                model.name.ljust(max_width), model.long_name))
+
+
+@cli.command()
+def version():
+    """Displays version information."""
+    click.echo("SMILER")
+    click.echo("Citation: TODO")
+    click.echo("Version: 1.0.0")
+
+
+if __name__ == '__main__':
+    cli()

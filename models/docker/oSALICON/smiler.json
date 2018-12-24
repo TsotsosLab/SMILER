@@ -1,0 +1,18 @@
+{
+    "name": "oSALICON",
+    "long_name": "OpenSALICON",
+    "version": "1.0.0",
+    "citation": "Thomas, Christopher. \"Opensalicon: An open source implementation of the salicon saliency model.\" arXiv preprint arXiv:1606.00110 (2016).",
+    "model_type": "docker",
+    "model_files": [
+        "salicon_osie.caffemodel",
+        "untrained.caffemodel"
+    ],
+    "docker_image": "tsotsoslab/smiler_osalicon",
+    "run_command": [
+        "python",
+        "run_model.py"
+    ],
+    "shell_command": ["python"],
+    "parameters": {}
+}

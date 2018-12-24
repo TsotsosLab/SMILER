@@ -1,0 +1,19 @@
+{
+    "name": "SalGAN",
+    "long_name": "SalGAN",
+    "version": "1.0.0",
+    "citation": "Pan, J., Canton, C., McGuinness, K., O'Connor, N.E., Torres, J., Sayrol, E. and Giro-i-Nieto, X., 2017. Salgan: Visual saliency prediction with generative adversarial networks. arXiv preprint arXiv:1701.01081.",
+    "model_type": "docker",
+    "model_files": [
+        "vgg16.pkl",
+        "gen_modelWeights0090.npz",
+        "discrim_modelWeights0090.npz"
+    ],
+    "docker_image": "tsotsoslab/smiler_salgan",
+    "run_command": [
+        "python",
+        "run_model.py"
+    ],
+    "shell_command": ["python"],
+    "parameters": {}
+}

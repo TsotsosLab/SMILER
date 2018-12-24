@@ -1,0 +1,45 @@
+{
+    "name": "SSR",
+    "long_name": "Saliency Detection by Self-Resemblance",
+    "version": "1.0.0",
+    "citation": "Hae Jong Seo and Peyman Milanfar (2009). Nonparametric Bottom-Up Saliency Detection by Self-Resemblance. CVPR.",
+    "model_type": "matlab",
+    "model_files": [],
+    "parameters": {
+        "LARK_size": {
+		"default": 3,
+		"description": "The size of the Locally Adaptive Regression Kernels (LARKs).",
+		"valid_values": "Any integer greater than 0."
+	},
+        "LARK_sensitivity": {
+		"default": 0.42,
+		"description": "Sensitivity parameter for the LARKs.",
+		"valid_values": "A number between 0 and 1."
+	},
+        "LARK_smoothing": {
+		"default": 0.2,
+		"description": "A smoothing parameter for the LARKs.",
+		"valid_values": "A number between 0 and 1."
+	},
+        "number_LARK": {
+		"default": 7,
+		"description": "The number of LARK features to calculate for the feature matrix.",
+		"valid_values": "Any integer greater than 0."
+	},
+        "surround_size": {
+		"default": "inf",
+		"description": "The size of the surround region for center-surround comparisons when computing self-resemblance. When inf is specified, this means the model will use a global surround.",
+		"valid_values": "Any integer greater than 0 or \"inf\"."
+	},
+        "surround_sigma": {
+		"default": 0.07,
+		"description": "The fall-off parameter for the self-resemblance calculation.",
+		"valid_values": "Any number between 0 and 1."
+	},
+        "size": {
+		"default": [64, 64],
+		"description": "The size to which the image is rescaled during the saliency calculation.",
+		"valid_values": "Any integer tuple with values greater than 0."
+	}
+    }
+}

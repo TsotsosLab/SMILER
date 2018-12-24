@@ -1,0 +1,18 @@
+{
+    "name": "MLNet",
+    "long_name": "Multi-Level Network for Saliency Prediction",
+    "version": "1.0.0",
+    "citation": "Marcella Cornia, Lorenzo Baraldi, Giuseppe Serra, Rita Cucchiara. \"A Deep Multi-Level Network for Saliency Prediction.\" In Proceedings of the 23rd International Conference on Pattern Recognition, 2016.",
+    "model_type": "docker",
+    "model_files": [
+        "vgg16_weights.h5",
+        "mlnet_salicon_weights.pkl"
+    ],
+    "docker_image": "tsotsoslab/smiler_mlnet",
+    "run_command": [
+        "python",
+        "run_model.py"
+    ],
+    "shell_command": ["python"],
+    "parameters": {}
+}

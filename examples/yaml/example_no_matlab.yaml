@@ -1,0 +1,24 @@
+experiment:
+  name: Example Without MATLAB
+  description: An illustrative example of how to set up YAML experiments for SMILER; can be used without a MATLAB license.
+  input_path: ../input_images
+  base_output_path: ../output_images/no_matlab
+  parameters:
+    do_smoothing: proportional
+
+runs:
+  - algorithm: DGII
+    output_path: ../output_images/no_matlab/DGII_nosmooth_nocentre
+    parameters:
+      do_smoothing: none
+      center_prior: none
+
+  - algorithm: DGII
+
+  - algorithm: oSALICON
+    output_path: ../output_images/no_matlab/oSALICON_nosmooth_nocentre
+    parameters:
+      do_smoothing: none
+      center_prior: none
+
+  - algorithm: oSALICON

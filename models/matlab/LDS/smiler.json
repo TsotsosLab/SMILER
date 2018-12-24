@@ -1,0 +1,11 @@
+{
+    "name": "LDS",
+    "long_name": "Learning Discriminative Subspaces for Saliency",
+    "version": "1.0.0",
+    "notes": "LDS relies in part on a trained representation of principle components calculated in LAB space, and may therefore not function well when applied to other colour spaces. This version of LDS also relies on files included in the GBVS model folder, and will not function without the inclusion of those files (these are automatically bundled in SMILER, but this dependence is noted for the convenience of users).",
+    "citation": "Fang, S., Li, J., Tian, Y., Huang, T., & Chen, X. (2017). Learning discriminative subspaces on random contrasts for image saliency analysis. IEEE transactions on neural networks and learning systems, 28(5), 1095-1108.",
+    "model_type": "matlab",
+    "model_files": [],
+    "parameters": {
+    }
+}

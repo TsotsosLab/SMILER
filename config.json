@@ -1,0 +1,64 @@
+{
+    "parameters": {
+        "do_smoothing": {
+            "default": "default",
+            "description": "Specification for post-processing smoothing. 'default' uses whatever smoothing step is provided by the originally released model code. 'none' turns off post-processing smoothing (though it should be noted that some implicit smoothing (eg. through image resizing) will remain). 'custom' smooths the map with a specified kernel 'proportional' smooths the map with a kernel sized to the major dimension of the image.",
+            "valid_values": ["default", "none", "custom", "proportional"]
+        },
+        "smooth_size": {
+            "default": 9.0,
+            "description": "Custom smoothing kernel size, only used when do_smoothing is set to custom.",
+            "valid_values": "Integer greater than 0"
+        },
+        "smooth_std": {
+            "default": 3.0,
+            "description": "Custom smoothing kernel standard deviation, only used when do_smoothing is set to custom.",
+            "valid_values": "Number greater than 0"
+        },
+        "smooth_prop": {
+            "default": 0.05,
+            "description": "Proportional smoothing kernel parameter, only used when do_smoothing is set to proportional. smooth_prop*max(image_height,image_width) is the standard deviation of a Gaussian kernel; size is set to 3 times this value.",
+            "valid_values": "Number between 0 and 1"
+        },
+        "scale_output": {
+            "default": "min-max",
+            "description": "Specification for rescaling saliency map values into a specified range. 'log-density' transforms the map to a probability density in log-space, as expected by the Information Gain metric. 'min-max' linearly rescales the values between a specified minimum and maximum. 'none' leaves the output in whatever range is dictated by the original model code 'normalized' returns normally distributed values with mean 0 and standard deviation 1.",
+            "valid_values": ["log-density", "min-max", "none", "normalized"]
+        },
+        "scale_min": {
+            "default": 0.0,
+            "description": "Minimum saliency value in the map, only valid when scale_output is set to min-max or log-density.",
+            "valid_values": "Any number less than scale_max"
+        },
+        "scale_max": {
+            "default": 1.0,
+            "description": "Maximum saliency value in the map, only valid when scale_output is set to min-max or log-density.",
+            "valid_values": "Any number greater than scale_min"
+        },
+        "color_space": {
+            "default": "default",
+            "description": "Specification for pre-processing conversion of the image color channels into a specified format. 'default' has each model perform calculations in the colour space recommended by the original model's authors. 'RGB' is red, green, blue. 'gray' is grayscale. 'YCbCr' is luminance, blue-difference, red-difference. 'LAB' is the CIELAB color space. 'HSV' is hue, saturation, value.",
+            "valid_values": ["default", "RGB", "gray", "YCbCr", "LAB", "HSV"]
+        },
+        "center_prior": {
+            "default": "default",
+            "description": "Specification for the addition of a priori bias toward the center, usually through the post-processing application of a centered Gaussian, but sometimes built into a model in other ways. Note that this option cannot guarantee to control all forms of spatial bias toward the center, but rather provides control over any parametric or explicit steps which contribute to such a spatial bias. 'default' uses whatever central bias term is automatically provided by a given model, if one is included. 'none' turns off or removes the sources of central biasing which are accessible to SMILER. 'proportional_add' adds a central Gaussian prior with sigma proportional to the image dimensions. 'proportional_mult' multiplies the map by a central Gaussian prior with sigma proportional to the image dimensions.",
+            "valid_values": ["default", "none", "proportional_add", "proportional_mult"]
+        },
+        "center_prior_prop": {
+            "default": 0.2,
+            "description": "When incorporating a central Gaussian prior, this parameter specifies the sigma of the Gaussian as a proportion of image dimensions. Only used when center_prior is set to proportional_add or proportional_mult.",
+            "valid_values": "Number between 0 and 1"
+        },
+        "center_prior_weight": {
+            "default": 0.5,
+            "description": "When incorporating a central Gaussian prior, this parameter specifies the weight given to the prior in the form of multiplicative gain. Higher numbers will mean more emphasis is placed on the central prior, whereas lower numbers will place more emphasis on the calculated saliency map. When center_prior is set to proportional_add, the resultant map will be equal to salmap + (center_prior_weight*center_prior_map). When center_prior is set to proportional_mult, the resultant map will be equal to (1-center_prior_weight)*salmap + (center_prior_weight)*salmap*center_prior_map. This parameter is not used in other conditions.",
+            "valid_values": "Number greater than 0"
+        },
+        "center_prior_scale_first": {
+            "default": true,
+            "description": "When incorporating a central Gaussian prior, this flag tells SMILER to first scale the saliency map to be between 0 and 1 before adding the prior (NOT the scale_output step - this takes place after adding a center prior). After adding the prior SMILER will then do any scaling specified by the scale_output parameter. It is recommended to keep this 'true' to ensure that the magnitude of the center prior is equivalent across algorithms, but this step may be skipped by setting the flag to 'false'.",
+            "valid_values": [true, false]
+        }
+    }
+}

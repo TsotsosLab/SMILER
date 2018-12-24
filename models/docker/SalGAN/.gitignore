@@ -1,0 +1,3 @@
+model/vgg16.pkl
+model/gen_modelWeights0090.npz
+model/discrim_modelWeights0090.npz

@@ -1,0 +1,65 @@
+function D = Patch2ImageDist(P, I, A)
+% function Patch2ImageDist(P, I) calculate distance between patch
+% P and patches on I.
+% INPUT
+% P         m-by-n-by-k
+% I         p-by-q-by-k
+% OUTPUT
+% D         p-by-q-by-k
+
+% 2010.6.25
+
+% Distance of 2 patches is defined as the Euclidian distance between their
+% vectors.
+% ALGORITHM
+% Definition: D(pi, pj) = sqrt( (pi-pj)^T (pi-pj) )
+%                       = sqrt( |pi|^2 + |pj|^2 - 2*dot(pi, pj) )
+
+M = size(P, 1);
+N = size(P, 2);
+
+if mod(M, 2) == 0 || mod(N, 2) == 0
+    error('Dimension of P should be odd number')
+end
+
+hM = (M-1)/2;          % half size of height of P
+hN = (N-1)/2;          % half size of width of Pend
+    
+Ds = zeros(size(I, 1)-2*hM, size(I, 2)-2*hN);
+
+intImage = zeros(size(I,1)+1, size(I,2)+1);
+
+for k=1:size(I, 3)
+    % Use convolution to calculate inner product
+    C = conv2(I(:, :, k), fliplr(flipud(P(:,:,k))), 'valid');
+
+    % Calulate |P|^2
+    nP = sum(sum(P(:,:,k).^2));
+
+    % Calculate |pi|^2 for each patch on I. Use squared integral image.
+    sI = I(:, :, k).^2;
+
+    intImage(2:end,2:end) = cumsum(cumsum(double(sI)),2);
+    
+    % valid region
+    T = 1+hM;
+    B = size(I,1) - hM;
+    L = 1+hN;
+    R = size(I,2) - hN;
+    
+    Ia = intImage(T-hM:B-hM, L-hN:R-hN);
+    Ib = intImage(T-hM:B-hM, L+hN+1:R+hN+1);
+    Ic = intImage(T+hM+1:B+hM+1, L-hN:R-hN);
+    Id = intImage(T+hM+1:B+hM+1, L+hN+1:R+hN+1);    
+    
+    A = Id + Ia - Ib - Ic;
+  
+    Ds = Ds + A + nP - 2*C;
+end
+
+Ds(Ds<0) = 0;
+Ds = sqrt(Ds);
+
+% Padding border zero
+D = zeros(size(I,1), size(I,2));
+D(hM+1:end-hM, hN+1:end-hN) = Ds;

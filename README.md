@@ -14,7 +14,7 @@ The bundle code was written by:
 
 If you use this code in your work, please cite the paper on which this work was based:
 
-TODO: LINK TO ARXIV PAPER & BIB ENTRY
+- https://arxiv.org/abs/1812.08848
 
 Much of the code base and datasets utilized in this bundle are not written by the bundle developers, and are instead owned by the individual researchers who originally developed and released the code. For each algorithm, dataset, or evaluation metric you use from the bundle, you should also cite the original work for which that particular component was developed. This bibliographic information can be accessed via the command `smiler info [model name]`.
 

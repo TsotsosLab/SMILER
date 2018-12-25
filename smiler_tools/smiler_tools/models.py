@@ -126,14 +126,15 @@ class DockerModel(SMILERModel):
         if None in (self.docker_image, self.run_command):
             raise ValueError("Invalid smiler.json file contents.")
 
-    def _run_in_shell(self, command, docker_or_sudo=True):
+    def _run_in_shell(self, command, docker_or_sudo=True, verbose=False):
         if docker_or_sudo:
             if getpass.getuser() in grp.getgrnam("docker").gr_mem:
                 pass
             else:
                 command = ["/usr/bin/sudo"] + command
 
-        print("Running:\n{}".format(command))
+        if verbose:
+            print("Running:\n{}".format(command))
         rc = subprocess.call(command)
         return rc
 

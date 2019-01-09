@@ -18,7 +18,7 @@ if(nargin < 3)
     enfrc3 = false; % default to not checking
 end
 
-if(isa(img_in, 'string'))
+if(isa(img_in, 'string') || isa(img_in, 'char'))
     % The input is given as a string, so indicates a filename
     img_out = im2double(imread(img_in));
 else

@@ -2,7 +2,7 @@
 function saliency = computeFinalSaliency(img, pScale, sScale, alpha, sigma0, sigma1, p1)
 % function saliency = computeFinalSaliency(image, pScale, sScale, alpha, sigma0, sigma1, p1)
 %
-% compute multi scale saliency over an image 
+% compute multi scale saliency over an image
 %
 % @input
 %   img - a given image to process
@@ -14,15 +14,15 @@ function saliency = computeFinalSaliency(img, pScale, sScale, alpha, sigma0, sig
 %   p1 - P(1|x) [128x171 matrix]
 % @output
 %   saliency - saliency of inputed image
-% 
+%
 % please refer to the following paper for details
-% Rezazadegan Tavakoli H, Rahtu E & Heikkil? J, 
+% Rezazadegan Tavakoli H, Rahtu E & Heikkil? J,
 % "Fast and efficient saliency detection using sparse sampling and kernel density estimation."
 % Proc. Scandinavian Conference on Image Analysis (SCIA 2011), 2011, Ystad, Sweden.
 %
-% The code has been tested on Matlab 2010a (32-bit) running windows. 
+% The code has been tested on Matlab 2010a (32-bit) running windows.
 % This code is publicly available for demonstration and educational
-% purposes, any commercial use without permission is strictly prohibited.  
+% purposes, any commercial use without permission is strictly prohibited.
 %
 % Please contact the author in case of any questions, comments, or Bug
 % reports
@@ -57,5 +57,3 @@ saliency = saliency.^alpha;
 
 saliency = mean(saliency, 3);
 saliency = (saliency - min(saliency(:))) / (max(saliency(:)) - min(saliency(:)));
-
-

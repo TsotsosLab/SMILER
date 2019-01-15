@@ -1,4 +1,5 @@
 import copy
+import array
 
 
 class ParameterMap(object):
@@ -48,7 +49,18 @@ class ParameterMap(object):
         return self._parameters.values()
 
     def get_matlab_struct(self, matlab_engine):
-        return self.get_pair_dict()
+        """
+        https://www.mathworks.com/help/matlab/matlab_external/handling-data-returned-from-python.html
+        """
+        struct = self.get_pair_dict()
+        for key in struct:
+            if isinstance(struct[key], int):
+                struct[key] *= 1.0
+            if isinstance(struct[key], list):
+                if struct[key] and isinstance(struct[key][0], int):
+                    struct[key] = matlab_engine.double(
+                        matlab_engine.cell2mat(struct[key]))
+        return struct
 
     def clone(self):
         return copy.deepcopy(self)

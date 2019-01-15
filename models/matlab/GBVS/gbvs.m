@@ -1,7 +1,7 @@
 function [out,motionInfo] = gbvs(img,param,prevMotionInfo)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                                                     %                            
+%                                                                                                     %
 % This computes the GBVS map for an image and puts it in master_map.                                  %
 %                                                                                                     %
 % If this image is part of a video sequence, motionInfo needs to be recycled in a                     %
@@ -24,7 +24,7 @@ function [out,motionInfo] = gbvs(img,param,prevMotionInfo)
 %  Jonathan Harel, Last Revised Aug 2008. jonharel@gmail.com                                          %
 %
 % ** Code modified from the original source code as part of SMILER
-% All effort has been made to preserve original functionality while 
+% All effort has been made to preserve original functionality while
 % bringing code execution into a common format. **
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,7 +36,7 @@ if ( (size(img,1) < 128) || (size(img,2) < 128) )
 end
 
 if ( (nargin < 2) || (~exist('param')) || isempty(param) )
-    param = makeGBVSParams(); 
+    param = makeGBVSParams();
 end
 [grframe,param] = initGBVS(param,size(img));
 
@@ -49,7 +49,7 @@ if ( param.useIttiKochInsteadOfGBVS )
     mymessage(param,'NOTE: Computing STANDARD Itti/Koch instead of Graph-Based Visual Saliency (GBVS)\n\n');
 end
 
-%%%% 
+%%%%
 %%%% STEP 1 : compute raw feature maps from image
 %%%%
 
@@ -57,7 +57,7 @@ mymessage(param,'computing feature maps...\n');
 if ( size(img,3) == 3 ) imgcolortype = 1; else, imgcolortype = 2; end
 [rawfeatmaps motionInfo] = getFeatureMaps( img , param , prevMotionInfo );
 
-%%%% 
+%%%%
 %%%% STEP 2 : compute activation maps from feature maps
 %%%%
 
@@ -74,7 +74,7 @@ for fmapi=1:length(mapnames)
     map_types{fmapi} = mapsobj.description;
     for typei = 1 : numtypes
         if ( param.activationType == 1 )
-            for lev = param.levels                
+            for lev = param.levels
                 mymessage(param,'making a graph-based activation (%s) feature map.\n',mapnames{fmapi});
                 i = i + 1;
                 [allmaps{i}.map,tmp] = graphsalapply( mapsobj.maps.val{typei}{lev} , ...
@@ -85,10 +85,10 @@ for fmapi=1:length(mapnames)
             for centerLevel = param.ittiCenterLevels
                 for deltaLevel = param.ittiDeltaLevels
                     mymessage(param,'making a itti-style activation (%s) feature map using center-surround subtraction.\n',mapnames{fmapi});
-                    i = i + 1;                    
+                    i = i + 1;
                     center_ = mapsobj.maps.origval{typei}{centerLevel};
                     sz_ = size(center_);
-                    surround_ = imresize( mapsobj.maps.origval{typei}{centerLevel+deltaLevel}, sz_ , 'bicubic' );                    
+                    surround_ = imresize( mapsobj.maps.origval{typei}{centerLevel+deltaLevel}, sz_ , 'bicubic' );
                     allmaps{i}.map = (center_ - surround_).^2;
                     allmaps{i}.maptype = [ fmapi centerLevel deltaLevel ];
                 end
@@ -97,8 +97,8 @@ for fmapi=1:length(mapnames)
     end
 end
 
-    
-%%%% 
+
+%%%%
 %%%% STEP 3 : normalize activation maps
 %%%%
 
@@ -109,11 +109,11 @@ for i=1:length(allmaps)
     if ( param.normalizationType == 1 )
         mymessage(param,' using fast raise to power scheme\n ', i);
         algtype = 4;
-        [norm_maps{i}.map,tmp] = graphsalapply( allmaps{i}.map , grframe, param.sigma_frac_norm, param.num_norm_iters, algtype , param.tol );        
+        [norm_maps{i}.map,tmp] = graphsalapply( allmaps{i}.map , grframe, param.sigma_frac_norm, param.num_norm_iters, algtype , param.tol );
     elseif ( param.normalizationType == 2 )
         mymessage(param,' using graph-based scheme\n');
         algtype = 1;
-        [norm_maps{i}.map,tmp] = graphsalapply( allmaps{i}.map , grframe, param.sigma_frac_norm, param.num_norm_iters, algtype , param.tol );                
+        [norm_maps{i}.map,tmp] = graphsalapply( allmaps{i}.map , grframe, param.sigma_frac_norm, param.num_norm_iters, algtype , param.tol );
     else
         mymessage(param,' using global - mean local maxima scheme.\n');
         norm_maps{i}.map = maxNormalizeStdGBVS( mat2gray(imresize(allmaps{i}.map,param.salmapsize, 'bicubic')) );
@@ -121,7 +121,7 @@ for i=1:length(allmaps)
     norm_maps{i}.maptype = allmaps{i}.maptype;
 end
 
-%%%% 
+%%%%
 %%%% STEP 4 : average across maps within each feature channel
 %%%%
 
@@ -139,7 +139,7 @@ for j=1:length(norm_maps)
 end
 %%% divide each feature channel by number of maps in that channel
 for fmapi = 1 : length(mapnames)
-  if ( param.normalizeTopChannelMaps) 
+  if ( param.normalizeTopChannelMaps)
       mymessage(param,'Performing additional top-level feature map normalization.\n');
       if ( param.normalizationType == 1 )
           algtype = 4;
@@ -154,7 +154,7 @@ for fmapi = 1 : length(mapnames)
   comb_norm_maps{fmapi} = cmaps{fmapi};
 end
 
-%%%% 
+%%%%
 %%%% STEP 5 : sum across feature channels
 %%%%
 
@@ -185,7 +185,7 @@ if ( blurfrac > 0 )
     master_map = mat2gray(master_map);
 end
 
-if ( param.unCenterBias )  
+if ( param.unCenterBias )
   invCB = load('invCenterBias');
   invCB = invCB.invCenterBias;
   centerNewWeight = 0.5;
@@ -195,7 +195,7 @@ if ( param.unCenterBias )
   master_map = mat2gray(master_map);
 end
 
-%%%% 
+%%%%
 %%%% save descriptive, rescaled (0-255) output for user
 %%%%
 

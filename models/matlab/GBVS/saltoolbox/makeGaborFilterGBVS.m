@@ -20,9 +20,9 @@ function filter = makeGaborFilterGBVS(gaborParams, angle, phase, varargin)
 
 % This file is part of the Saliency Toolbox - Copyright (C) 2006
 % by Dirk Walther and the California Institute of Technology.
-% The Saliency Toolbox is released under the GNU General Public 
-% License. See the enclosed COPYRIGHT document for details. 
-% For more information about this project see: 
+% The Saliency Toolbox is released under the GNU General Public
+% License. See the enclosed COPYRIGHT document for details.
+% For more information about this project see:
 % http://www.saliencytoolbox.net
 
 if isempty(varargin)
@@ -40,7 +40,7 @@ sz = gaborParams.filterSize;
 if (sz == -1)
   sz = ceil(max_stddev*sqrt(10));
 else
-  sz = floor(sz/2); 
+  sz = floor(sz/2);
 end
 
 psi = pi / 180 * phase;

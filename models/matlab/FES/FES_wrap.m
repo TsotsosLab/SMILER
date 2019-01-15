@@ -2,8 +2,8 @@
 % saliency model in the common SMILER format. If you use results produced
 % by this model, please cite
 % the following paper:
-% Tavakoli, Hamed Rezazadegan, Esa Rahtu, and Janne Heikkilä. "Fast and 
-%    efficient saliency detection using sparse sampling and kernel 
+% Tavakoli, Hamed Rezazadegan, Esa Rahtu, and Janne Heikkilä. "Fast and
+%    efficient saliency detection using sparse sampling and kernel
 %    density estimation." In Scandinavian Conference on Image Analysis,
 %    pp. 666-675. Springer, Berlin, Heidelberg, 2011.
 %
@@ -34,7 +34,7 @@ end
 params = checkCommonParams(in_params);
 
 % get the path to smiler.json
-pathroot = mfilename('fullpath'); 
+pathroot = mfilename('fullpath');
 [pathroot, ~, ~] = fileparts(pathroot);
 
 % check the model-specific parameter fields

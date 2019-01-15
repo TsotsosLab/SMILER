@@ -8,99 +8,99 @@
     "model_files": [],
     "parameters": {
         "salmapmaxsize": {
-		"default": 32,
-		"description": "The maximum dimensions of the saliency map during calculation; setting to a large number will greatly increase computation time.",
-		"valid_values": "Any number greater than 0, recommended to not go above 60."
-	},
+            "default": 32,
+            "description": "The maximum dimensions of the saliency map during calculation; setting to a large number will greatly increase computation time.",
+            "valid_values": "Any number greater than 0, recommended to not go above 60."
+        },
         "channels": {
-		"default": "CIO",
-		"description": "Specification of the feature channels to use in the saliency calculation. C = Color, I = Intensity, O = Orientation, R = contRast, F = Flicker, M = Motion. Note that by default the C channel will be based on DKL space, unless a non-default value of color_space is set.",
-		"valid_values": "Any substring of CIORD (in any order). F and M currently "
-	},
+            "default": "CIO",
+            "description": "Specification of the feature channels to use in the saliency calculation. C = Color, I = Intensity, O = Orientation, R = contRast, F = Flicker, M = Motion. Note that by default the C channel will be based on DKL space, unless a non-default value of color_space is set.",
+            "valid_values": "Any substring of CIORD (in any order). F and M currently "
+        },
         "colorWeight": {
-		"default": 1,
-		"description": "Weight of the C channel; channel weights are relative",
-		"valid_values": "Any positive number"
-	},
+            "default": 1,
+            "description": "Weight of the C channel; channel weights are relative",
+            "valid_values": "Any positive number"
+        },
         "intensityWeight": {
-		"default": 1,
-		"description": "Weight of the I channel; channel weights are relative",
-		"valid_values": "Any positive number"
-	},
+            "default": 1,
+            "description": "Weight of the I channel; channel weights are relative",
+            "valid_values": "Any positive number"
+        },
         "orientationWeight": {
-		"default": 1,
-		"description": "Weight of the O channel; channel weights are relative",
-		"valid_values": "Any positive number"
-	},
+            "default": 1,
+            "description": "Weight of the O channel; channel weights are relative",
+            "valid_values": "Any positive number"
+        },
         "flickerWeight": {
-		"default": 1,
-		"description": "Weight of the F channel; channel weights are relative",
-		"valid_values": "Any positive number"
-	},
+            "default": 1,
+            "description": "Weight of the F channel; channel weights are relative",
+            "valid_values": "Any positive number"
+        },
         "motionWeight": {
-		"default": 1,
-		"description": "Weight of the M channel; channel weights are relative",
-		"valid_values": "Any positive number"
-	},
+            "default": 1,
+            "description": "Weight of the M channel; channel weights are relative",
+            "valid_values": "Any positive number"
+        },
         "dklcolorWeight": {
-		"default": 1,
-		"description": "Weight of the D channel; channel weights are relative",
-		"valid_values": "Any positive number"
-	},
+            "default": 1,
+            "description": "Weight of the D channel; channel weights are relative",
+            "valid_values": "Any positive number"
+        },
         "gaborangles": {
-		"default": [0, 45, 90, 135],
-		"description": "Angles of Gabor filters",
-		"valid_values": "A list of angles in degrees."
-	},
+            "default": [0, 45, 90, 135],
+            "description": "Angles of Gabor filters",
+            "valid_values": "A list of angles in degrees."
+        },
         "contrastwidth": {
-		"default": 0.1,
-		"description": "Length over which luminance variance is calculated for the contrast channel specified as a fraction of image width. Larger values will give smoother contrast maps.",
-		"valid_values": "A number between 0 and 1."
-	},
+            "default": 0.1,
+            "description": "Length over which luminance variance is calculated for the contrast channel specified as a fraction of image width. Larger values will give smoother contrast maps.",
+            "valid_values": "A number between 0 and 1."
+        },
         "flickerNewFrameWt": {
-		"default": 1,
-		"description": "A parameter to adjust how quickly frame information is updated to calculate flicker (which is the absolute difference between the current frame and the previous frame estimate). For value w, previous frame estimate becomes w*(current frame) + (1-w)*(previous estimate).",
-		"valid_values": "A number between 0 and 1, inclusive."
-	},
+            "default": 1,
+            "description": "A parameter to adjust how quickly frame information is updated to calculate flicker (which is the absolute difference between the current frame and the previous frame estimate). For value w, previous frame estimate becomes w*(current frame) + (1-w)*(previous estimate).",
+            "valid_values": "A number between 0 and 1, inclusive."
+        },
         "motionAngles": {
-		"default": [0, 45, 90, 135],
-		"description": "Angles of motion filters",
-		"valid_values": "A list of angles in degrees."
-	},
+            "default": [0, 45, 90, 135],
+            "description": "Angles of motion filters",
+            "valid_values": "A list of angles in degrees."
+        },
         "levels": {
-		"default": [2, 3, 4],
-		"description": "Resolution of feature maps relative to original image in image pyramid.",
-		"valid_values": "A set of integers with allowable minimum 2 and maximum 9."
-	},
+            "default": [2, 3, 4],
+            "description": "Resolution of feature maps relative to original image in image pyramid.",
+            "valid_values": "A set of integers with allowable minimum 2 and maximum 9."
+        },
         "multilevels": {
-		"default": [],
-		"description": "Provide a set of numbers (e.g. [1,2]) for additional node lattices across spatial scales.",
-		"valid_values": "A set of integers or an empty set."
-	},
+            "default": [],
+            "description": "Provide a set of numbers (e.g. [1,2]) for additional node lattices across spatial scales.",
+            "valid_values": "A set of integers or an empty set."
+        },
         "sigma_frac_act": {
-		"default": 0.15,
-		"description": "Sigma parameter in activation step, as fraction of image width.",
-		"valid_values": "A number between 0 and 1."
-	},
+            "default": 0.15,
+            "description": "Sigma parameter in activation step, as fraction of image width.",
+            "valid_values": "A number between 0 and 1."
+        },
         "sigma_frac_norm": {
-		"default": 0.06,
-		"description": "Sigma parameter in normalization step, as fraction of image width.",
-		"valid_values": "A number between 0 and 1."
-	},
+            "default": 0.06,
+            "description": "Sigma parameter in normalization step, as fraction of image width.",
+            "valid_values": "A number between 0 and 1."
+        },
         "num_norm_iters": {
-		"default": 1,
-		"description": "The number of normalization iterations.",
-		"valid_values": "An integer greater than or equal to 1."
-	},
+            "default": 1,
+            "description": "The number of normalization iterations.",
+            "valid_values": "An integer greater than or equal to 1."
+        },
         "tol": {
-		"default": 0.0001,
-		"description": "The stopping rule parameter for the distribution equilibrium calculation. Higher numbers make GBVS run faster, but the results are more approximate.",
-		"valid_values": "A positive number."
-	},
+            "default": 0.0001,
+            "description": "The stopping rule parameter for the distribution equilibrium calculation. Higher numbers make GBVS run faster, but the results are more approximate.",
+            "valid_values": "A positive number."
+        },
         "normalizationType": {
-		"default": 1,
-		"description": "The type of normalization used; 1 raises the map to a power, and 2 is graph-based normalization as described in the original paper. Authors no longer recommend 2, though it is not specified why.",
-		"valid_values": "1 or 2."
-	}
+            "default": 1,
+            "description": "The type of normalization used; 1 raises the map to a power, and 2 is graph-based normalization as described in the original paper. Authors no longer recommend 2, though it is not specified why.",
+            "valid_values": "1 or 2."
+        }
     }
 }

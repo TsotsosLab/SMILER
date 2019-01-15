@@ -7,19 +7,19 @@
     "model_files": [],
     "parameters": {
         "size": {
-		"default": 512,
-		"description": "The dimensions that the image gets resized to when calculating the saliency map. Note that this is always a square.",
-		"valid_values": "Any integer greater than 0."
-	},
+            "default": 512,
+            "description": "The dimensions that the image gets resized to when calculating the saliency map. Note that this is always a square.",
+            "valid_values": "Any integer greater than 0."
+        },
         "quantile": {
-		"default": 0.1,
-		"description": "A parameter which specifies the proportion of regions (sorted by degree of similarity) from the neighbourhood which are included in the calculation.",
-		"valid_values": "A number greater than 0 and less than or equal to 1"
-	},
+            "default": 0.1,
+            "description": "A parameter which specifies the proportion of regions (sorted by degree of similarity) from the neighbourhood which are included in the calculation.",
+            "valid_values": "A number greater than 0 and less than or equal to 1"
+        },
         "modeltype": {
-		"default": "CovariancesOnly",
-		"description": "CovariancesOnly calculates saliency based on the covariances of the image patches, whereas SigmaPoints includes both covariances and means.",
-		"valid_values": ["CovariancesOnly", "SigmaPoints"]
-	}
+            "default": "CovariancesOnly",
+            "description": "CovariancesOnly calculates saliency based on the covariances of the image patches, whereas SigmaPoints includes both covariances and means.",
+            "valid_values": ["CovariancesOnly", "SigmaPoints"]
+        }
     }
 }

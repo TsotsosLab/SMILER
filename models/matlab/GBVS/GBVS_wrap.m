@@ -1,5 +1,5 @@
 % GBVS_wrap executes the Graph-Based Visual Saliency (GBVS) model in the
-% SMILER format. If you use results produced by this model, please cite 
+% SMILER format. If you use results produced by this model, please cite
 % the following paper:
 % J. Harel, C. Koch, and P. Perona (2006). Graph-Based Visual Saliency.
 %   Proc. Neural Information Processing Systems (NIPS)
@@ -39,7 +39,7 @@ end
 params = checkCommonParams(in_params);
 
 % get the path to smiler.json
-pathroot = mfilename('fullpath'); 
+pathroot = mfilename('fullpath');
 [pathroot, ~, ~] = fileparts(pathroot);
 
 % check the model-specific parameter fields
@@ -77,7 +77,7 @@ if(strcmp(params.color_space, 'default'))
     params.channels = strrep(params.channels, 'C', 'D');
 end
 params.dklcolorWeight = params.colorWeight;
-    
+
 %% Reading the image
 img = checkImgInput(input_image, params.color_space);
 

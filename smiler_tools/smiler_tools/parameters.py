@@ -1,5 +1,4 @@
 import copy
-import array
 
 
 class ParameterMap(object):

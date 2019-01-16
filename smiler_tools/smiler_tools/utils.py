@@ -63,11 +63,12 @@ def pretty_print_parameters(parameter_list):
         print('')
         print(param.name)
         print('    Default:      {}'.format(param.value))
-        print('    Description:  {}'.format('\n                  '.join(
-            textwrap.wrap(param.description, break_on_hyphens=False))))
-
-        print('    Valid Values: {}'.format('\n                   '.join(
-            textwrap.wrap(str(param.valid_values)))))
+        if (param.description):
+            print('    Description:  {}'.format('\n                  '.join(
+                textwrap.wrap(param.description, break_on_hyphens=False))))
+        if (param.valid_values):
+            print('    Valid Values: {}'.format('\n                   '.join(
+                textwrap.wrap(str(param.valid_values)))))
 
 
 def maybe_init_matlab_engine(startup_options="-nodesktop", init_iSMILER=False):

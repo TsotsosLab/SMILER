@@ -2,7 +2,7 @@
     "name": "SUN",
     "long_name": "Saliency Using Natural Statistics",
     "version": "1.0.0",
-    "citation": "Zhang, Lingyun, et al. \"SUN: A Bayesian framework for saliency using natural statistics.\" Journal of vision 8.7 (2008): 32.",
+    "citation": "Zhang, L., Marks, T.K., Tong, M.H., Shan, H., Cottrell, G.W. (2008) \"SUN: A Bayesian framework for saliency using natural statistics.\" Journal of vision 8.7: 32.",
     "model_type": "matlab",
     "model_files": [],
     "parameters": {

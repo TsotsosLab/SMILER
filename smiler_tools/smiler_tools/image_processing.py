@@ -1,7 +1,10 @@
+import os
 import numpy as np
 from PIL import Image
 import scipy.ndimage
 import scipy.misc
+
+from smiler_tools import utils
 
 
 def save_image(path, image, create_parent=True, uid=None, gid=None):
@@ -12,7 +15,7 @@ def save_image(path, image, create_parent=True, uid=None, gid=None):
         gid = os.getgid()
 
     if create_parent:
-        create_dirs_if_none(path, uid=uid, gid=gid)
+        utils.create_dirs_if_none(path, uid=uid, gid=gid)
 
     scipy.misc.imsave(path, image)
     os.chown(path, uid, gid)

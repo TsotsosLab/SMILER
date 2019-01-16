@@ -17,22 +17,11 @@ from models import sam_vgg, sam_resnet, kl_divergence, correlation_coefficient, 
 from smiler_tools.runner import run_model
 
 
-def generator_test(b_s, imgs_test_path):
-    images = [
-        imgs_test_path + f for f in os.listdir(imgs_test_path)
-        if f.endswith(('.jpg', '.jpeg', '.png'))
-    ]
-    images.sort()
-
+def generator_test(b_s, image_paths):
     gaussian = np.zeros((b_s, nb_gaussian, shape_r_gt, shape_c_gt))
 
-    counter = 0
     while True:
-        yield [
-            preprocess_images(images[counter:counter + b_s], shape_r, shape_c),
-            gaussian
-        ]
-        counter = (counter + b_s) % len(images)
+        yield [preprocess_images(image_paths, shape_r, shape_c), gaussian]
 
 
 def main():
@@ -71,15 +60,12 @@ def main():
             format(network_string))
 
     def compute_saliency(image_path):
-        gaussian = np.zeros((b_s, nb_gaussian, shape_r_gt, shape_c_gt))
-
-
-        predictions = m.predict_on_batch(
-            preprocess_images([image_path], shape_r, shape_c))
-        sm = predictions[0][0]
+        predictions = m.predict_generator(
+            generator_test(b_s, [image_path]), 1)[0]
 
         original_image = cv2.imread(image_path, 0)
-        res = postprocess_predictions(sm, original_image.shape[0],
+        res = postprocess_predictions(predictions[0][0],
+                                      original_image.shape[0],
                                       original_image.shape[1])
         return res
 

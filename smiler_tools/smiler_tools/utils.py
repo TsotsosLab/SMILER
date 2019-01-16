@@ -1,8 +1,6 @@
 import os
 import textwrap
 
-import scipy.misc
-
 
 def create_dirs_if_none(path, uid=None, gid=None):
     if uid is None:
@@ -15,20 +13,6 @@ def create_dirs_if_none(path, uid=None, gid=None):
     if not os.path.isdir(parent_path):
         os.makedirs(parent_path)
         os.chown(parent_path, uid, gid)
-
-
-def save_image(path, image, create_parent=True, uid=None, gid=None):
-    if uid is None:
-        uid = os.getuid()
-
-    if gid is None:
-        gid = os.getgid()
-
-    if create_parent:
-        create_dirs_if_none(path, uid=uid, gid=gid)
-
-    scipy.misc.imsave(path, image)
-    os.chown(path, uid, gid)
 
 
 def get_image_path_map(input_dir, output_dir, recursive=False):

@@ -71,7 +71,7 @@ def run_model(compute_saliency,
             post_processed_image = image_processing.post_process(
                 saliency_map, options)
 
-            utils.save_image(
+            image_processing.save_image(
                 output_path,
                 post_processed_image,
                 uid=target_uid,

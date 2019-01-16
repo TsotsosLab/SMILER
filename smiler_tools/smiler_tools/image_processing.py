@@ -1,6 +1,21 @@
 import numpy as np
 from PIL import Image
 import scipy.ndimage
+import scipy.misc
+
+
+def save_image(path, image, create_parent=True, uid=None, gid=None):
+    if uid is None:
+        uid = os.getuid()
+
+    if gid is None:
+        gid = os.getgid()
+
+    if create_parent:
+        create_dirs_if_none(path, uid=uid, gid=gid)
+
+    scipy.misc.imsave(path, image)
+    os.chown(path, uid, gid)
 
 
 def pre_process(img, options, check_channels=True):
@@ -52,6 +67,7 @@ def _gauss2d(shape=(3, 3), sigma=0.5):
     if sumh != 0:
         h /= sumh
     return h
+
 
 def post_process(img, options):
     """Pre-processes images based on options generated from SMILER ParameterMap.

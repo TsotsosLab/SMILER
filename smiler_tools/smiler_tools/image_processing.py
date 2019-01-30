@@ -34,10 +34,7 @@ def pre_process(img, options, check_channels=True):
 	"""
     color_space = options.get('color_space', 'RGB')
 
-    if not isinstance(img, np.ndarray):
-        img = np.array(img, dtype=np.uint8)
-    if img.dtype != np.uint8:
-        img = img.astype(np.uint8)
+    img = np.asarray(img, dtype=np.uint8)
 
     if color_space not in ['default', 'RGB', 'gray', 'YCbCr', 'LAB', 'HSV']:
         raise ValueError(

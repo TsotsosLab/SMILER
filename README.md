@@ -27,7 +27,7 @@ pip install -r requirements.txt
 ```
 
 2. To be able to run MATLAB models, ensure the [MATLAB Python API](https://www.mathworks.com/help/matlab/matlab-engine-for-python.html) is installed.
-3. To be able to run Docker models, ensure [nvidia-docker](https://github.com/NVIDIA/nvidia-docker) is installed.
+3. To be able to run Docker models, ensure [nvidia-docker2](https://github.com/NVIDIA/nvidia-docker) is installed.
 
 If you want to include `smiler` in your environment (so you can call `smiler` from any directory, instead of having to use `./smiler`), just add this to the end of your `.bashrc`:
 

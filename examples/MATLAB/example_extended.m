@@ -35,6 +35,13 @@ end
 %% Set up the default experiment
 models = {'AIM', 'AWS', 'IKN', 'IMSIG', 'QSS'}; % a cell array of the SMILER model codes which we wish to execute
 
+% The next few lines create a dynamically allocated array of function
+% handles to invoke the models specified in the previous line
+modfun = cell(length(models),1);
+for i = 1:length(models)
+    modfun{i} = str2func([models{i}, '_wrap']);
+end
+
 input_set = dir('../input_images'); % get the list of images located in the example directory
 input_set = input_set(3:end);  % trim folder navigation elements '.' and '..'
 
@@ -58,7 +65,7 @@ for i = 1:length(input_set)
     img = imread(['../input_images/', input_set(i).name]); % read in the image
     for j = 1:length(models)
         disp(['Executing model ', models{j}, ' on image ', num2str(i), ' of ', num2str(length(input_set))]);
-        salmap = feval([models{j}, '_wrap'], img); % execute the jth model on the ith image
+        salmap = modfun{j}(img); % execute the jth model on the ith image
         imwrite(salmap, ['../output_maps_default/', models{j}, '/', input_set(i).name]); % save the saliency map
     end
 end
@@ -73,6 +80,10 @@ disp(' '); % create a space in the display output before starting the next exper
 % explicit colour space specification
 cspaces = {'RGB', 'LAB', 'HSV'};
 models = {'AWS', 'IMSIG'};
+modfun = cell(length(models),1);
+for i = 1:length(models)
+    modfun{i} = str2func([models{i}, '_wrap']);
+end
 
 % We need a place to store output, so set that up
 % if the output directory does not yet exist, make it
@@ -99,7 +110,7 @@ for i = 1:length(input_set)
         for k = 1:length(cspaces)
             params.color_space = cspaces{k};
             disp(['Executing model ', models{j}, ' in colour space ', cspaces{k}, ' on image ', num2str(i), ' of ', num2str(length(input_set))]);
-            salmap = feval([models{j}, '_wrap'], img, params); % execute the jth model on the ith image passing in our custom parameter
+            salmap = modfun{j}(img, params); % execute the jth model on the ith image passing in our custom parameter
             imwrite(salmap, ['../output_maps_custom/', models{j}, '_', cspaces{k}, '/', input_set(i).name]); % save the saliency map
         end
     end
@@ -126,7 +137,7 @@ for i = 1:length(input_set)
     for k = 1:length(bases)
         params.AIM_filters = bases{k};
         disp(['Executing AIM with basis ', bases{k}, ' on image ', num2str(i), ' of ', num2str(length(input_set))]);
-        salmap = AIM_wrap(img, params); % since we know which model we are executing here, we don't need feval and can directly call it's wrapper function
+        salmap = AIM_wrap(img, params); % since we know which model we are executing here, we don't need function handles and can directly call it's wrapper function
         imwrite(salmap, ['../output_maps_custom/AIM_', bases{k}, '/', input_set(i).name]); % save the saliency map
     end
 end

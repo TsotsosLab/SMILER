@@ -69,6 +69,8 @@ if(nargin < 1 || strcmp(model, 'global'))
                 else
                     sout = 'false';
                 end
+            elseif(isempty(info.parameters.(param_fields{i}).default))
+                fprintf('\t%s\n', 'Default value: []');
             else
                 sout = [info.parameters.(param_fields{i}).valid_values{1}];
             end
@@ -116,6 +118,8 @@ else
                 disp(param_fields{i});
                 if(isnumeric(info.parameters.(param_fields{i}).default))
                     fprintf('\t%s\n', ['Default value: ', num2str(info.parameters.(param_fields{i}).default)]);
+                elseif(isempty(info.parameters.(param_fields{i}).default))
+                    fprintf('\t%s\n', 'Default value: []');
                 else
                     % MATLAB fprintf doesn't have a conversion from Boolean to
                     % character, so we need to do this ourselves
@@ -125,6 +129,8 @@ else
                         else
                             fprintf('Default value: false \n');
                         end
+                    elseif(iscell(info.parameters.(param_fields{i}).default))
+                        fprintf('\t%s\n', ['Default value: ', cell2mat(info.parameters.(param_fields{i}).default)]);
                     else
                         fprintf('\t%s\n', ['Default value: ', info.parameters.(param_fields{i}).default]);
                     end
@@ -137,7 +143,7 @@ else
                             sout = 'false';
                         end
                     else
-                        sout = [info.parameters.(param_fields{i}).valid_values{1}];
+                        sout = char(info.parameters.(param_fields{i}).valid_values{1});
                     end
                     for j = 2:numel(info.parameters.(param_fields{i}).valid_values)
                         if(islogical(info.parameters.(param_fields{i}).valid_values{j}))
@@ -147,7 +153,7 @@ else
                                 sout = [sout, ', false'];
                             end
                         else
-                            sout = [sout, ', ', info.parameters.(param_fields{i}).valid_values{j}];
+                            sout = [sout, ', ', char(info.parameters.(param_fields{i}).valid_values{j})];
                         end
                     end
                     fprintf('\t%s\n', ['Valid values: ', sout]);

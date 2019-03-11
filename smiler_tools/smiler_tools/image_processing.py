@@ -3,6 +3,7 @@ import numpy as np
 from PIL import Image
 import scipy.ndimage
 import scipy.misc
+import scipy.stats
 
 from smiler_tools import utils
 
@@ -79,6 +80,13 @@ def post_process(img, options):
     Returns:
         result: numpy array
     """
+    img = np.asarray(img, dtype=np.uint8)
+
+    center_prior = options.get('center_prior', 'default')
+    center_prior_prop = options.get('center_prior_prop', 0.2)
+    center_prior_scale_first = options.get('center_prior_scale_first', True)
+    center_prior_weight = options.get('center_prior_weight', 0.5)
+
     do_smoothing = options.get('do_smoothing', 'default')
     scale_output = options.get('scale_output', 'min-max')
 
@@ -89,12 +97,9 @@ def post_process(img, options):
     scale_min = options.get('scale_min', 0.0)
     scale_max = options.get('scale_max', 1.0)
 
-    if not isinstance(img, np.ndarray):
-        img = np.array(img)
-
-    if do_smoothing in ['custom', 'proportional']:
+    if do_smoothing in ('custom', 'proportional'):
         if do_smoothing == 'custom':
-            Filter = _gauss2d(
+            gauss_filter = _gauss2d(
                 shape=(smooth_size, smooth_size), sigma=smooth_std)
         elif do_smoothing == 'proportional':
             h, w = img.shape
@@ -102,12 +107,34 @@ def post_process(img, options):
             smooth_std = smooth_prop * largest_size
             smooth_size = int(3 * smooth_std)
 
-            Filter = _gauss2d(
+            gauss_filter = _gauss2d(
                 shape=(smooth_size, smooth_size), sigma=smooth_std)
 
-        img = scipy.ndimage.correlate(img, Filter, mode='reflect')
+        img = scipy.ndimage.correlate(img, gauss_filter, mode='reflect')
 
-    if scale_output in ['min-max', 'normalized']:
+    if center_prior in ('proportional_add', 'proportional_mult'):
+        if center_prior_scale_first:
+            min_val = img.min()
+            max_val = img.max()
+            img = ((1.0 / (max_val - min_val)) * (img - min_val))
+
+        w = img.shape[0]
+        h = img.shape[1]
+
+        x = np.linspace(-(w // 2), (w - 1) // 2, w)
+        y = np.linspace(-(h // 2), (h - 1) // 2, h)
+
+        prior_mask_x = scipy.stats.norm.pdf(x, 0, w * center_prior_prop)
+        prior_mask_y = scipy.stats.norm.pdf(y, 0, h * center_prior_prop)
+        prior_mask = np.outer(prior_mask_x, prior_mask_y)
+
+        if center_prior == 'proportional_add':
+            img = img + center_prior_weight * prior_mask
+        elif center_prior == 'proportional_mult':
+            img = (1.0 - center_prior_weight) * img + center_prior_weight * (
+                img * prior_mask)
+
+    if scale_output in ('min-max', 'normalized'):
         if scale_output == 'min-max':
             img = np.interp(img, (img.min(), img.max()),
                             (scale_min, scale_max))

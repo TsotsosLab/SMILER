@@ -265,7 +265,7 @@ def version():
     click.echo("SMILER: Saliency Model Implementation Library for Experimental Research")
     click.echo("Citation: https://arxiv.org/abs/1812.08848")
     click.echo("Website: https://github.com/TsotsosLab/SMILER")
-    click.echo("Version: 1.0.0")
+    click.echo("Version: 1.1.0")
 
 
 if __name__ == '__main__':

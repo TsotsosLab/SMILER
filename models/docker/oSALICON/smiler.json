@@ -1,7 +1,7 @@
 {
     "name": "oSALICON",
     "long_name": "OpenSALICON",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "citation": "Thomas, Christopher. \"Opensalicon: An open source implementation of the salicon saliency model.\" arXiv preprint arXiv:1606.00110 (2016).",
     "model_type": "docker",
     "model_files": [

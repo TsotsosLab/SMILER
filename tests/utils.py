@@ -23,7 +23,9 @@ def load_image_python(image_path):
 
 
 def init_matlab_engine():
-    eng = smiler_tools.utils.maybe_init_matlab_engine(init_iSMILER=True)
+    eng = smiler_tools.utils.maybe_init_matlab_engine(
+        matlab_tools_path=os.path.join(HERE_PATH, '..', 'smiler_matlab_tools'),
+        init_iSMILER=True)
     return eng
 
 

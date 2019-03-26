@@ -55,7 +55,9 @@ def pretty_print_parameters(parameter_list):
                 textwrap.wrap(str(param.valid_values)))))
 
 
-def maybe_init_matlab_engine(startup_options="-nodesktop", init_iSMILER=False):
+def maybe_init_matlab_engine(matlab_tools_path='smiler_matlab_tools',
+                             startup_options="-nodesktop",
+                             init_iSMILER=False):
     """
     Only creates a matlab engine and initializes iSMILER the first time it is run.
     """
@@ -73,7 +75,7 @@ def maybe_init_matlab_engine(startup_options="-nodesktop", init_iSMILER=False):
     if maybe_init_matlab_engine._matlab_engine is None:
         eng = matlab.engine.start_matlab(str(startup_options))
         if init_iSMILER:
-            eng.cd('smiler_matlab_tools')
+            eng.cd(matlab_tools_path)
             eng.iSMILER(nargout=0)
         maybe_init_matlab_engine._matlab_engine = eng
 

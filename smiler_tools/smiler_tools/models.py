@@ -19,6 +19,9 @@ from smiler_tools.parameters import ParameterMap
 # Constants
 ############################################################
 
+HERE_PATH = os.path.dirname(os.path.realpath(__file__))
+MATLAB_TOOLS_PATH = os.path.join(HERE_PATH, '..', '..', 'smiler_matlab_tools')
+
 MODEL_BASE_URL = "https://www.eecs.yorku.ca/rspace-jtfarm/SMILER/"
 
 NO_NVIDIA_DOCKER_WARNING_MSG = """WARNING: nvidia-docker not found!
@@ -205,7 +208,9 @@ class MATLABModel(SMILERModel):
         options_matlab_startup = parameter_map.get_val('matlab_startup')
 
         matlab_engine = utils.maybe_init_matlab_engine(
-            startup_options=options_matlab_startup, init_iSMILER=True)
+            matlab_tools_path=MATLAB_TOOLS_PATH,
+            startup_options=options_matlab_startup,
+            init_iSMILER=True)
         if matlab_engine is None:
             print("Matlab initialization failed.")
             return
@@ -246,7 +251,9 @@ class MATLABModel(SMILERModel):
 
     def shell(self):
         matlab_engine = utils.maybe_init_matlab_engine(
-            startup_options="-desktop", init_iSMILER=True)
+            matlab_tools_path=MATLAB_TOOLS_PATH,
+            startup_options="-desktop",
+            init_iSMILER=True)
 
         if matlab_engine is None:
             print("Matlab initialization failed.")

@@ -33,7 +33,7 @@ def run_model(compute_saliency,
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    image_path_map = utils.get_image_path_map(
+    image_path_tuples = utils.get_image_path_tuples(
         input_dir, output_dir, recursive=options_recursive)
 
     real_stdout = sys.stdout
@@ -42,8 +42,8 @@ def run_model(compute_saliency,
         sys.stdout = open('/dev/null', 'w')
         sys.stderr = open('/dev/null', 'w')
 
-    num_paths = len(image_path_map)
-    for img_number, path_tuple in enumerate(image_path_map.items()):
+    num_paths = len(image_path_tuples)
+    for img_number, path_tuple in enumerate(image_path_tuples):
         input_path = path_tuple[0]
         output_path = path_tuple[1]
         printable_input_path = os.path.relpath(input_path, input_dir)

@@ -220,13 +220,13 @@ class MATLABModel(SMILERModel):
         if not os.path.exists(output_dir):
             os.mkdir(output_dir)
 
-        image_path_map = utils.get_image_path_map(
+        image_path_tuples = utils.get_image_path_tuples(
             input_dir, output_dir, recursive=options_recursive)
 
         algo_wrapper_function = getattr(matlab_engine, self.name + "_wrap")
 
-        num_paths = len(image_path_map)
-        for img_number, path_tuple in enumerate(image_path_map.items()):
+        num_paths = len(image_path_tuples)
+        for img_number, path_tuple in enumerate(image_path_tuples):
             input_path = path_tuple[0]
             output_path = path_tuple[1]
             printable_input_path = os.path.relpath(input_path, input_dir)

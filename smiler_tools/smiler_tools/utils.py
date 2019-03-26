@@ -15,7 +15,7 @@ def create_dirs_if_none(path, uid=None, gid=None):
         os.chown(parent_path, uid, gid)
 
 
-def get_image_path_map(input_dir, output_dir, recursive=False):
+def get_image_path_tuples(input_dir, output_dir, recursive=False):
     if recursive:
         image_path_map = {}
         for dirpath, dirnames, filenames in os.walk(input_dir):
@@ -32,7 +32,7 @@ def get_image_path_map(input_dir, output_dir, recursive=False):
             if os.path.isfile(os.path.join(input_dir, f))
         }
 
-    return image_path_map
+    return sorted(image_path_map.items())
 
 
 def print_pretty_header(header_text, width=60):

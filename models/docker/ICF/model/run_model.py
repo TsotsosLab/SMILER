@@ -11,6 +11,7 @@ import json
 import numpy as np
 from scipy.ndimage import zoom, imread
 from scipy.misc import logsumexp
+import cv2
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # Suppress logging.
 import tensorflow as tf
@@ -30,7 +31,7 @@ def main():
     tf.reset_default_graph()
 
     check_point = 'ICF.ckpt'
-    new_saver = tf.train.import_meta_graph('{}.meta'.format(check_point))
+    saver = tf.train.import_meta_graph('{}.meta'.format(check_point))
 
     input_tensor = tf.get_collection('input_tensor')[0]
     centerbias_tensor = tf.get_collection('centerbias_tensor')[0]
@@ -39,7 +40,7 @@ def main():
         0]
 
     sess = tf.Session()
-    new_saver.restore(sess, check_point)
+    saver.restore(sess, check_point)
 
     def compute_saliency(image_path):
         img = imread(image_path, mode='RGB')
@@ -80,9 +81,12 @@ def main():
         # The log density predictions again are of shape `BHWC`. Since the log-densities
         # are just 2d, `C=1`. And since we processed only one image, `B=1`:
 
-        result = 255*np.exp(log_density_prediction[0, :, :, 0])
+        log_density_out = log_density_prediction[0, :, :, 0]
+        sm = np.exp(log_density_out)
+        sm /= np.sum(sm)
+        cv2.normalize(sm, sm, 0, 255, cv2.NORM_MINMAX)
 
-        return result
+        return sm
 
     run_model(compute_saliency)
 

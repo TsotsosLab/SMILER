@@ -1,4 +1,4 @@
-% gaussian_wrap produces a centered Gaussian scaled by the height and 
+% gaussian_wrap produces a centered Gaussian scaled by the height and
 % width of the image as the resultant saliency map. It is independent of
 % the image appearance, and is meant to serve as a spatial prior baseline.
 %
@@ -28,7 +28,7 @@ end
 params = checkCommonParams(in_params);
 
 % get the path to smiler.json
-pathroot = mfilename('fullpath'); 
+pathroot = mfilename('fullpath');
 [pathroot, ~, ~] = fileparts(pathroot);
 
 % check the model-specific parameter fields

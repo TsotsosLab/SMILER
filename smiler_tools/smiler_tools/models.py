@@ -122,7 +122,8 @@ class DockerModel(SMILERModel):
     def __init__(self, **kwargs):
         super(DockerModel, self).__init__(**kwargs)
 
-        self.docker_image = kwargs.get('docker_image')
+        self.docker_image = "{}:{}".format(
+            kwargs.get('docker_image'), self.version)
         self.run_command = kwargs.get('run_command')
         self.shell_command = kwargs.get('shell_command')
 

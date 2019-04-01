@@ -36,12 +36,14 @@ class Salicon:
         im = np.array(
             Image.open(image_path),
             dtype=np.float32)  # in RGB - ASSUMING 256 IMAGE
+
         # check that the image has 3 channels; sometimes black and white comes in as only a 2D image
         if len(im.shape) < 3:
-            im = np.stack((im,)*3,-1)
+            im = np.stack((im, ) * 3, -1)
         #remove alpha channel
         if im.shape[2] > 3:
             im = im[:, :, :3]
+
         im = self.process_the_image(im)
         coarse_img = scipy.ndimage.interpolation.zoom(
             im,

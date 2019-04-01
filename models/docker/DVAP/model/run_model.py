@@ -8,6 +8,8 @@ import sys
 import time
 import cv2
 
+sys.path.insert(0, '/opt/caffe/python')
+
 import caffe
 
 from smiler_tools.runner import run_model

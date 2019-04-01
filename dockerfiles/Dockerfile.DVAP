@@ -1,4 +1,4 @@
-FROM bvlc/caffe:gpu
+FROM nvidia/cuda:8.0-cudnn5-devel
 
 LABEL maintainer="Toni Kunic <tk@cse.yorku.ca>"
 
@@ -33,6 +33,24 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       cmake \
       git && \
     rm -rf /var/lib/apt/lists/*
+
+################################################################################
+### @wenguanwang's implementation depends on HED's caffe.
+
+COPY models/docker/DVAP/model/Makefile.config /opt/Makefile.config
+
+RUN git clone https://github.com/s9xie/hed.git /opt/caffe && \
+    cd /opt/caffe && \
+    protoc src/caffe/proto/caffe.proto --cpp_out=. && \
+    mkdir include/caffe/proto && \
+    mv src/caffe/proto/caffe.pb.h include/caffe/proto && \
+    mv /opt/Makefile.config /opt/caffe/ && \
+    make -j && \
+    make tools && \
+    make pycaffe
+
+################################################################################
+### smiler_tools
 
 COPY ./smiler_tools /tmp/smiler_tools
 RUN pip install /tmp/smiler_tools

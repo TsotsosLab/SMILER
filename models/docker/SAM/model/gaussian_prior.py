@@ -9,9 +9,14 @@ floatX = theano.config.floatX
 
 
 class LearningPrior(Layer):
-    def __init__(self, nb_gaussian, init='normal', weights=None,
-                 W_regularizer=None, activity_regularizer=None,
-                 W_constraint=None, **kwargs):
+    def __init__(self,
+                 nb_gaussian,
+                 init='normal',
+                 weights=None,
+                 W_regularizer=None,
+                 activity_regularizer=None,
+                 W_constraint=None,
+                 **kwargs):
         self.nb_gaussian = nb_gaussian
         self.init = initializations.get(init, dim_ordering='th')
 
@@ -25,7 +30,7 @@ class LearningPrior(Layer):
         super(LearningPrior, self).__init__(**kwargs)
 
     def build(self, input_shape):
-        self.W_shape = (self.nb_gaussian*4, )
+        self.W_shape = (self.nb_gaussian * 4, )
         self.W = self.init(self.W_shape, name='{}_W'.format(self.name))
 
         self.trainable_weights = [self.W]
@@ -56,9 +61,9 @@ class LearningPrior(Layer):
 
     def call(self, x, mask=None):
         mu_x = self.W[:self.nb_gaussian]
-        mu_y = self.W[self.nb_gaussian:self.nb_gaussian*2]
-        sigma_x = self.W[self.nb_gaussian*2:self.nb_gaussian*3]
-        sigma_y = self.W[self.nb_gaussian*3:]
+        mu_y = self.W[self.nb_gaussian:self.nb_gaussian * 2]
+        sigma_x = self.W[self.nb_gaussian * 2:self.nb_gaussian * 3]
+        sigma_y = self.W[self.nb_gaussian * 3:]
 
         self.b_s = x.shape[0]
         self.height = x.shape[2]
@@ -74,21 +79,35 @@ class LearningPrior(Layer):
         sigma_x = K.clip(sigma_x, 0.1, 0.9)
         sigma_y = K.clip(sigma_y, 0.2, 0.8)
 
-        x_t = T.dot(T.ones((self.height, 1)), self._linspace(0, 1.0, self.width).dimshuffle('x', 0))
-        y_t = T.dot(self._linspace(e1, e2, self.height).dimshuffle(0, 'x'), T.ones((1, self.width)))
+        x_t = T.dot(
+            T.ones((self.height, 1)),
+            self._linspace(0, 1.0, self.width).dimshuffle('x', 0))
+        y_t = T.dot(
+            self._linspace(e1, e2, self.height).dimshuffle(0, 'x'),
+            T.ones((1, self.width)))
 
-        x_t = K.repeat_elements(K.expand_dims(x_t, dim=-1), self.nb_gaussian, axis=-1)
-        y_t = K.repeat_elements(K.expand_dims(y_t, dim=-1), self.nb_gaussian, axis=-1)
+        x_t = K.repeat_elements(
+            K.expand_dims(x_t, dim=-1), self.nb_gaussian, axis=-1)
+        y_t = K.repeat_elements(
+            K.expand_dims(y_t, dim=-1), self.nb_gaussian, axis=-1)
 
         gaussian = 1 / (2 * np.pi * sigma_x * sigma_y + K.epsilon()) * \
                    T.exp(-((x_t - mu_x) ** 2 / (2 * sigma_x ** 2 + K.epsilon()) +
                            (y_t - mu_y) ** 2 / (2 * sigma_y ** 2 + K.epsilon())))
 
         gaussian = K.permute_dimensions(gaussian, (2, 0, 1))
-        max_gauss = K.repeat_elements(K.expand_dims(K.repeat_elements(K.expand_dims(K.max(K.max(gaussian, axis=1), axis=1)), self.height, axis=-1)), self.width, axis=-1)
+        max_gauss = K.repeat_elements(
+            K.expand_dims(
+                K.repeat_elements(
+                    K.expand_dims(K.max(K.max(gaussian, axis=1), axis=1)),
+                    self.height,
+                    axis=-1)),
+            self.width,
+            axis=-1)
         gaussian = gaussian / max_gauss
 
-        output = K.repeat_elements(K.expand_dims(gaussian, dim=0), self.b_s, axis=0)
+        output = K.repeat_elements(
+            K.expand_dims(gaussian, dim=0), self.b_s, axis=0)
 
         return output
 
@@ -103,11 +122,18 @@ class LearningPrior(Layer):
         return T.arange(num, dtype=floatX) * step + start
 
     def get_config(self):
-        config = {'nb_gaussian': self.nb_gaussian,
-                  'init': self.init.__name__,
-                  'W_regularizer': self.W_regularizer.get_config() if self.W_regularizer else None,
-                  'activity_regularizer': self.activity_regularizer.get_config() if self.activity_regularizer else None,
-                  'W_constraint': self.W_constraint.get_config() if self.W_constraint else None,
-                  }
+        config = {
+            'nb_gaussian':
+            self.nb_gaussian,
+            'init':
+            self.init.__name__,
+            'W_regularizer':
+            self.W_regularizer.get_config() if self.W_regularizer else None,
+            'activity_regularizer':
+            self.activity_regularizer.get_config()
+            if self.activity_regularizer else None,
+            'W_constraint':
+            self.W_constraint.get_config() if self.W_constraint else None,
+        }
         base_config = super(LearningPrior, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))

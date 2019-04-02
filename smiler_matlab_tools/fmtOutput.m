@@ -54,7 +54,7 @@ end
 
 % Now combine the prior with the saliency map
 if(strcmp(params.center_prior, 'proportional_add'))
-    salmap = salmap + params.center_prior_weight*cpmap;
+    salmap = (1-params.center_prior_weight)*salmap + params.center_prior_weight*cpmap;
 elseif(strcmp(params.center_prior, 'proportional_mult'))
     salmap = (1-params.center_prior_weight)*salmap + params.center_prior_weight*(salmap.*cpmap);
 end

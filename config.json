@@ -52,7 +52,7 @@
         },
         "center_prior_weight": {
             "default": 0.5,
-            "description": "When incorporating a central Gaussian prior, this parameter specifies the weight given to the prior in the form of multiplicative gain. Higher numbers will mean more emphasis is placed on the central prior, whereas lower numbers will place more emphasis on the calculated saliency map. When center_prior is set to proportional_add, the resultant map will be equal to salmap + (center_prior_weight*center_prior_map). When center_prior is set to proportional_mult, the resultant map will be equal to (1-center_prior_weight)*salmap + (center_prior_weight)*salmap*center_prior_map. This parameter is not used in other conditions.",
+            "description": "When incorporating a central Gaussian prior, this parameter specifies the weight given to the prior in the form of multiplicative gain. Higher numbers will mean more emphasis is placed on the central prior, whereas lower numbers will place more emphasis on the calculated saliency map. When center_prior is set to proportional_add, the resultant map will be equal to (1-center_prior_weight)*salmap + center_prior_weight*center_prior_map. When center_prior is set to proportional_mult, the resultant map will be equal to (1-center_prior_weight)*salmap + center_prior_weight*salmap*center_prior_map. This parameter is not used in other conditions.",
             "valid_values": "Number greater than 0"
         },
         "center_prior_scale_first": {

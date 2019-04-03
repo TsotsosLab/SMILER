@@ -129,7 +129,8 @@ def post_process(img, options):
         prior_mask = np.outer(prior_mask_x, prior_mask_y)
 
         if center_prior == 'proportional_add':
-            img = img + center_prior_weight * prior_mask
+            img = (1.0 - center_prior_weight
+                   ) * img + center_prior_weight * prior_mask
         elif center_prior == 'proportional_mult':
             img = (1.0 - center_prior_weight) * img + center_prior_weight * (
                 img * prior_mask)

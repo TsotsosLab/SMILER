@@ -155,60 +155,60 @@ function object = parse_array(inStr, esc, varargin) % JSON array is written in r
     end
 
     if next_char(inStr) ~= ']'
-	if(jsonopt('FastArrayParser',1,varargin{:})>=1 && arraydepth>=jsonopt('FastArrayParser',1,varargin{:}))
-            [endpos, e1l, e1r]=matching_bracket(inStr,pos);
-            arraystr=['[' inStr(pos:endpos)];
-            arraystr=regexprep(arraystr,'"_NaN_"','NaN');
-            arraystr=regexprep(arraystr,'"([-+]*)_Inf_"','$1Inf');
-            arraystr(arraystr==sprintf('\n'))=[];
-            arraystr(arraystr==sprintf('\r'))=[];
-            %arraystr=regexprep(arraystr,'\s*,',','); % this is slow,sometimes needed
-            if(~isempty(e1l) && ~isempty(e1r)) % the array is in 2D or higher D
-        	astr=inStr((e1l+1):(e1r-1));
-        	astr=regexprep(astr,'"_NaN_"','NaN');
-        	astr=regexprep(astr,'"([-+]*)_Inf_"','$1Inf');
-        	astr(astr==sprintf('\n'))=[];
-        	astr(astr==sprintf('\r'))=[];
-        	astr(astr==' ')='';
-        	if(isempty(find(astr=='[', 1))) % array is 2D
-                    dim2=length(sscanf(astr,'%f,',[1 inf]));
-        	end
-            else % array is 1D
-        	astr=arraystr(2:end-1);
-        	astr(astr==' ')='';
-        	[obj, count, errmsg, nextidx]=sscanf(astr,'%f,',[1,inf]);
-        	if(nextidx>=length(astr)-1)
-                    object=obj;
-                    pos=endpos;
-                    parse_char(inStr, ']');
-                    return;
-        	end
-            end
+        if(jsonopt('FastArrayParser',1,varargin{:})>=1 && arraydepth>=jsonopt('FastArrayParser',1,varargin{:}))
+                [endpos, e1l, e1r]=matching_bracket(inStr,pos);
+                arraystr=['[' inStr(pos:endpos)];
+                arraystr=regexprep(arraystr,'"_NaN_"','NaN');
+                arraystr=regexprep(arraystr,'"([-+]*)_Inf_"','$1Inf');
+                arraystr(arraystr==sprintf('\n'))=[];
+                arraystr(arraystr==sprintf('\r'))=[];
+                %arraystr=regexprep(arraystr,'\s*,',','); % this is slow,sometimes needed
+                if(~isempty(e1l) && ~isempty(e1r)) % the array is in 2D or higher D
+                astr=inStr((e1l+1):(e1r-1));
+                astr=regexprep(astr,'"_NaN_"','NaN');
+                astr=regexprep(astr,'"([-+]*)_Inf_"','$1Inf');
+                astr(astr==sprintf('\n'))=[];
+                astr(astr==sprintf('\r'))=[];
+                astr(astr==' ')='';
+                if(isempty(find(astr=='[', 1))) % array is 2D
+                        dim2=length(sscanf(astr,'%f,',[1 inf]));
+                end
+                else % array is 1D
+                astr=arraystr(2:end-1);
+                astr(astr==' ')='';
+                [obj, count, errmsg, nextidx]=sscanf(astr,'%f,',[1,inf]);
+                if(nextidx>=length(astr)-1)
+                        object=obj;
+                        pos=endpos;
+                        parse_char(inStr, ']');
+                        return;
+                end
+                end
 
-            try
-              if(~isempty(dim2))
-        	astr=arraystr;
-        	astr(astr=='[')='';
-        	astr(astr==']')='';
-                astr=regexprep(astr,'\s*$','');
-        	astr(astr==' ')='';
-        	[obj, count, errmsg, nextidx]=sscanf(astr,'%f,',inf);
-        	if(nextidx>=length(astr)-1)
-                    object=reshape(obj,dim2,numel(obj)/dim2)';
-                    pos=endpos;
-                    parse_char(inStr, ']');
-                    if(pbar>0)
-                        waitbar(pos/length(inStr),pbar,'loading ...');
-                    end
-                    return;
-        	end
-              end
-              arraystr=regexprep(arraystr,'\]\s*,','];');
-            catch
-            end
-	else
-            arraystr='[';
-	end
+                try
+                  if(~isempty(dim2))
+                astr=arraystr;
+                astr(astr=='[')='';
+                astr(astr==']')='';
+                    astr=regexprep(astr,'\s*$','');
+                astr(astr==' ')='';
+                [obj, count, errmsg, nextidx]=sscanf(astr,'%f,',inf);
+                if(nextidx>=length(astr)-1)
+                        object=reshape(obj,dim2,numel(obj)/dim2)';
+                        pos=endpos;
+                        parse_char(inStr, ']');
+                        if(pbar>0)
+                            waitbar(pos/length(inStr),pbar,'loading ...');
+                        end
+                        return;
+                end
+                  end
+                  arraystr=regexprep(arraystr,'\]\s*,','];');
+                catch
+                end
+        else
+                arraystr='[';
+        end
         try
            arraystr=regexprep(arraystr,'^\s*\[','{','once');
            arraystr=regexprep(arraystr,'\]\s*$','}','once');
@@ -231,6 +231,10 @@ function object = parse_array(inStr, esc, varargin) % JSON array is written in r
             parse_char(inStr, ',');
          end
         end
+    else
+        % the parser found '[]', so we just want to return an empty array,
+        % not an empty cell
+        object = [];
     end
     if(jsonopt('SimplifyCell',0,varargin{:})==1)
       try

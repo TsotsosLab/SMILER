@@ -59,6 +59,9 @@ class ParameterMap(object):
                 if struct[key] and isinstance(struct[key][0], int):
                     struct[key] = matlab_engine.double(
                         matlab_engine.cell2mat(struct[key]))
+                elif len(struct[key]) == 0:
+                    struct[key] = matlab_engine.double(
+                        matlab_engine.cell2mat(struct[key]))
         return struct
 
     def clone(self):

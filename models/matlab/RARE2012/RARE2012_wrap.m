@@ -44,7 +44,7 @@ pathroot = mfilename('fullpath');
 params = checkModelParams(params, [pathroot, '/smiler.json']);
 
 %% Reading image
-img = checkImgInput(input_image, params.color_space);
+img = checkImgInput(input_image, params.color_space, true);
 
 %% Calculating the Saliency Map
 salmap = RARE2012(img);

@@ -38,7 +38,7 @@ pathroot = mfilename('fullpath');
 params = checkModelParams(params, [pathroot, '/smiler.json']);
 
 %% Reading the image
-img = checkImgInput(input_image, params.color_space);
+img = checkImgInput(input_image, params.color_space, true);
 
 %% Calculating the saliency map
 

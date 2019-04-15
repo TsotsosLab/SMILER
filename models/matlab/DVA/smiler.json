@@ -6,5 +6,10 @@
     "model_type": "matlab",
     "model_files": [],
     "parameters": {
+        "size": {
+		"default": [80, 120],
+		"description": "The size to which the image is rescaled during the saliency calculation.",
+		"valid_values": "Any integer tuple with values greater than 0."
+	}
     }
 }

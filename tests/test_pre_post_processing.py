@@ -9,7 +9,8 @@ HERE_PATH = os.path.dirname(os.path.realpath(__file__))
 class TestBasicSetup(unittest.TestCase):
     def setUp(self):
         self.matlab_engine = utils.init_matlab_engine()
-        self.img_path = os.path.join(HERE_PATH, "../examples/input_images/bar_colours.png")
+        self.img_path = os.path.join(
+            HERE_PATH, "../examples/input_images/bar_colours.png")
 
         self.parameter_map = utils.get_parameter_map()
         self.parameter_dict = self.parameter_map.get_pair_dict()
@@ -29,7 +30,7 @@ class TestBasicSetup(unittest.TestCase):
         img_py = utils.python_pre_and_post(self.img_python,
                                            self.parameter_dict)
 
-        utils.ensure_matlab_and_python_similar(img_matlab, img_py)
+        utils.assert_images_are_similar(img_matlab, img_py)
 
     def test_equivalence_smoothing(self):
         self.parameter_dict['do_smoothing'] = 'proportional'
@@ -40,7 +41,7 @@ class TestBasicSetup(unittest.TestCase):
         img_py = utils.python_pre_and_post(self.img_python,
                                            self.parameter_dict)
 
-        utils.ensure_matlab_and_python_similar(img_matlab, img_py)
+        utils.assert_images_are_similar(img_matlab, img_py)
 
     def test_equivalence_scaling(self):
         self.parameter_dict['scale_output'] = 'min-max'
@@ -51,7 +52,7 @@ class TestBasicSetup(unittest.TestCase):
         img_py = utils.python_pre_and_post(self.img_python,
                                            self.parameter_dict)
 
-        utils.ensure_matlab_and_python_similar(img_matlab, img_py)
+        utils.assert_images_are_similar(img_matlab, img_py)
 
     def test_equivalence_center_prior(self):
         self.parameter_dict['center_prior'] = 'proportional_add'
@@ -62,7 +63,17 @@ class TestBasicSetup(unittest.TestCase):
         img_py = utils.python_pre_and_post(self.img_python,
                                            self.parameter_dict)
 
-        utils.ensure_matlab_and_python_similar(img_matlab, img_py)
+        utils.assert_images_are_similar(img_matlab, img_py)
+
+    def test_cli_and_matlab_equivalence(self):
+        algorithm_name = 'AIM'
+
+        shell_image = utils.saliency_via_shell_interface(
+            algorithm_name, self.img_path)
+        matlab_image = utils.saliency_via_MATLAB_interface(
+            algorithm_name, self.img_path, self.matlab_engine)
+
+        utils.assert_images_are_similar(matlab_image, shell_image)
 
 
 if __name__ == '__main__':

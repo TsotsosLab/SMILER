@@ -102,15 +102,11 @@ def post_process(img, options):
             gauss_filter = _gauss2d(
                 shape=(smooth_size, smooth_size), sigma=smooth_std)
         elif do_smoothing == 'proportional':
-            h, w = img.shape
-            largest_size = h if h > w else w
-            smooth_std = smooth_prop * largest_size
-            smooth_size = int(3 * smooth_std)
+            sigma = smooth_prop * max(img.shape)
 
-            gauss_filter = _gauss2d(
-                shape=(smooth_size, smooth_size), sigma=smooth_std)
+            gauss_filter = _gauss2d(shape=(3 * sigma, 3 * sigma), sigma=sigma)
 
-        img = scipy.ndimage.correlate(img, gauss_filter, mode='reflect')
+        img = scipy.ndimage.correlate(img, gauss_filter, mode='constant')
 
     if center_prior in ('proportional_add', 'proportional_mult'):
         if center_prior_scale_first:

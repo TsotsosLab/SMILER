@@ -54,7 +54,7 @@ params.useIttiKochInsteadOfGBVS = 0; % We want GBVS, not IKN
 params.activationType = 1; % It is unclear why this needs to be set if useIttiKochInsteadOfGBVS is set, but this is an expected parameter for gbvs code
 params.normalizeTopChannelMaps = 0; % Again, this seems to be something which should be controlled by useIttiKochInsteadOfGBVS, but is specified individually
 
-if(~strcmp(params.center_prior, 'default'))
+if(strcmp(params.center_prior, 'default'))
     params.unCenterBias = false; % We want GBVS to run as it normally would
 else
     params.unCenterBias = true; % We want to try and control the spatial bias through SMILER, so remove as much as we can from GBVS

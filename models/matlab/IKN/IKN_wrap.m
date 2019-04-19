@@ -59,9 +59,14 @@ params.verbose = 0; % We don't want verbose turned on
 params.saveInputImage = 0; % We don't want to output the input image as part of its output struct
 params.activationType = 2; % It is unclear why this needs to be set if useIttiKochInsteadOfGBVS is set, but this is an expected parameter for gbvs code
 params.normalizeTopChannelMaps = 1; % Again, this seems to be something which should be controlled by useIttiKochInsteadOfGBVS, but is specified individually
-params.unCenterBias = false; % The unCenterBias step is designed for GBVS, so turn off for IKN
 params.levels = [2,3,4]; % it is unclear why this must be specified for IKN since it is expressly designated a GBVS parameter, but the code does not work without it
 params.salmapmaxsize = 32; % it is unclear why this must be specified for IKN since it is a GBVS parameter, but the code does not work without it
+
+if(strcmp(params.center_prior, 'default'))
+    params.unCenterBias = false; % We want IKN to run as it normally would
+else
+    params.unCenterBias = true; % We want to try and control the spatial bias through SMILER, so remove as much as we can from IKN
+end
 
 if(~strcmp(params.do_smoothing, 'default'))
     % we do not want default smoothing, so turn off all smoothing in the

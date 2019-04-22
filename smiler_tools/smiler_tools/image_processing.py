@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageCms
 import scipy.ndimage
 import scipy.misc
 import scipy.stats
@@ -45,8 +45,19 @@ def pre_process(img, options, check_channels=True):
         color_space = 'L'
 
     if color_space != 'default':
-        img = Image.fromarray(img).convert(color_space)
-        img = np.array(img)
+        if color_space == 'LAB':
+            # Special case, PIL can't convert RGB -> LAB directly.
+            img = Image.fromarray(img)
+
+            srgb_p = ImageCms.createProfile('sRGB')
+            lab_p  = ImageCms.createProfile('LAB')
+
+            rgb2lab = ImageCms.buildTransformFromOpenProfiles(srgb_p, lab_p, "RGB", "LAB")
+            ImageCms.applyTransform(img, rgb2lab, inPlace=True)
+            img = np.array(img)
+        else:
+            img = Image.fromarray(img).convert(color_space)
+            img = np.array(img)
 
     if color_space == 'L':
         img = np.expand_dims(img, 2)  # adding third channel

@@ -142,12 +142,15 @@ def post_process(img, options):
             img = (1.0 - center_prior_weight) * img + center_prior_weight * (
                 img * prior_mask)
 
-    if scale_output in ('min-max', 'normalized'):
-        if scale_output == 'min-max':
-            img = np.interp(img, (img.min(), img.max()),
-                            (scale_min, scale_max))
+    if scale_output == 'min-max':
+        img = np.interp(img, (img.min(), img.max()), (scale_min, scale_max))
+    elif scale_output == 'normalized':
+        img = (img - img.mean()) / img.std()
+    elif scale_output == 'log-density':
+        min_val = img.min()
+        max_val = img.max()
+        img = ((1.0 / (max_val - min_val)) * (img - min_val))
 
-        elif scale_output == 'normalized':
-            img = (img - img.mean()) / img.std()
+        img = np.log(img / img.sum())
 
     return img

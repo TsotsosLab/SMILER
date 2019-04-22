@@ -16,10 +16,26 @@ import smiler_tools.config
 import smiler_tools.image_processing
 
 
-def CC(sal_map_1, sal_map_2):
+def similarity_score(sal_map_1, sal_map_2):
     """Linear correlation coefficient."""
     sal_map_1 = np.asarray(sal_map_1, dtype=np.float32)
     sal_map_2 = np.asarray(sal_map_2, dtype=np.float32)
+
+    if sal_map_1.min() == -np.inf:
+        sal_map_1_desired_min = np.nanmin(sal_map_1[sal_map_1 != -np.inf])
+        sal_map_1[sal_map_1 == -np.inf] = sal_map_1_desired_min
+
+    if sal_map_2.min() == -np.inf:
+        sal_map_2_desired_min = np.nanmin(sal_map_2[sal_map_2 != -np.inf])
+        sal_map_2[sal_map_2 == -np.inf] = sal_map_2_desired_min
+
+    if sal_map_1.max() == np.inf:
+        sal_map_1_desired_max = np.nanmax(sal_map_1[sal_map_1 != np.inf])
+        sal_map_1[sal_map_1 == np.inf] = sal_map_1_desired_max
+
+    if sal_map_2.max() == np.inf:
+        sal_map_2_desired_max = np.nanmax(sal_map_2[sal_map_2 != np.inf])
+        sal_map_2[sal_map_2 == np.inf] = sal_map_2_desired_max
 
     if sal_map_1.size != sal_map_2.size:
         sal_map_2 = scipy.misc.imresize(sal_map_2, sal_map_1.shape)
@@ -69,13 +85,13 @@ def python_pre_and_post(img, parameter_dict):
     return img
 
 
-def assert_images_are_similar(img_matlab, img_python):
-    img_matlab = np.asarray(img_matlab)
-    img_python = np.asarray(img_python)
-    assert img_matlab.shape == img_python.shape
+def assert_images_are_similar(img1, img2, tolerance=0.99):
+    img1 = np.asarray(img1)
+    img2 = np.asarray(img2)
+    assert img1.shape == img2.shape
 
-    cc_score = CC(img_matlab, img_python)
-    assert cc_score > 0.95
+    cc_score = similarity_score(img1, img2)
+    assert cc_score > tolerance
 
 
 def saliency_via_shell_interface(algorithm_name, image_path):

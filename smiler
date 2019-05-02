@@ -222,6 +222,8 @@ def info(model_name, parameters):
             click.echo()
             click.echo(u"Path: {}".format(model.path))
             if model.parameter_map:
+                click.echo()
+                click.echo('Model Parameters:')
                 utils.pretty_print_parameters(
                     model.parameter_map.get_parameters())
             if model.notes:

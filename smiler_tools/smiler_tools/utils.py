@@ -43,16 +43,20 @@ def print_pretty_header(header_text, width=60):
 
 def pretty_print_parameters(parameter_list):
     parameters = sorted(parameter_list, key=lambda x: x.name)
-    for param in parameters:
-        print('')
-        print(param.name)
-        print('    Default:      {}'.format(param.value))
-        if (param.description):
-            print('    Description:  {}'.format('\n                  '.join(
-                textwrap.wrap(param.description, break_on_hyphens=False))))
-        if (param.valid_values):
-            print('    Valid Values: {}'.format('\n                   '.join(
-                textwrap.wrap(str(param.valid_values)))))
+    if parameters:
+        for param in parameters:
+            print('')
+            print(param.name)
+            print('    Default:      {}'.format(param.value))
+            if (param.description):
+                print('    Description:  {}'.format('\n                  '.join(
+                    textwrap.wrap(param.description, break_on_hyphens=False))))
+            if (param.valid_values):
+                print('    Valid Values: {}'.format('\n                   '.join(
+                    textwrap.wrap(str(param.valid_values)))))
+    else:
+        print('    None.')
+
 
 
 def maybe_init_matlab_engine(matlab_tools_path='smiler_matlab_tools',

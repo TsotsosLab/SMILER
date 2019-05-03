@@ -24,6 +24,7 @@
     "parameters": {
         "network": {
             "default": "SAM-VGG",
+            "description": "The pretrained network used by the SAM model. SAM-VGG requires less GPU memory than SAM-ResNet.",
             "valid_values": ["SAM-VGG", "SAM-ResNet"]
         }
     }

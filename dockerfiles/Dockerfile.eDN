@@ -41,6 +41,7 @@ RUN pip install \
   scipy==1.2.1 \
   scikit-image==0.14.2 \
   dask==1.2.0 \
+  numexpr \
   liblinear \
   hyperopt
 

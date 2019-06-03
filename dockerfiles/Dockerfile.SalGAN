@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip install \
       tqdm==4.5.0 \
       numpy==1.11.0 \
+      scipy==1.2.1 \
       Theano==0.8.2 \
       https://github.com/Lasagne/Lasagne/archive/master.zip
 

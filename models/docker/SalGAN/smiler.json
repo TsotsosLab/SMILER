@@ -1,7 +1,7 @@
 {
     "name": "SalGAN",
     "long_name": "Saliency using Generative Adversarial Networks",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "citation": "Pan, J., Canton, C., McGuinness, K., O'Connor, N.E., Torres, J., Sayrol, E. and Giro-i-Nieto, X., 2017. Salgan: Visual saliency prediction with generative adversarial networks. arXiv preprint arXiv:1701.01081.",
     "model_type": "docker",
     "model_files": [

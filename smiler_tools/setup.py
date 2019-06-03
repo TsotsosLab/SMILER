@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="smiler_tools",
-    version="1.2.0",
+    version="1.3.0",
     author="Toni Kunic",
     author_email="tk@eecs.yorku.ca",
     description="Helper package for smiler Docker containers.",

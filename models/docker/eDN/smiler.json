@@ -1,7 +1,7 @@
 {
     "name": "eDN",
     "long_name": "Ensemble of Deep Networks",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "citation": "Vig, Eleonora, Michael Dorr, and David Cox. \"Large-scale optimization of hierarchical features for saliency prediction in natural images.\" CVPR (2014)",
     "model_type": "docker",
     "model_files": [

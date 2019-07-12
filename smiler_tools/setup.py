@@ -8,7 +8,7 @@ setuptools.setup(
     version="1.3.0",
     author="Toni Kunic",
     author_email="tk@eecs.yorku.ca",
-    description="Helper package for smiler Docker containers.",
+    description="Helper package for SMILER.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/tsotsoslab/SMILER",
@@ -20,7 +20,7 @@ setuptools.setup(
     ],
     classifiers=(
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
         "Operating System :: POSIX :: Linux",
     ),
 )

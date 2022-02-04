@@ -32,7 +32,7 @@ pip install -r requirements.txt
 If you want to include `smiler` in your environment (so you can call `smiler` from any directory, instead of having to use `./smiler`), just add this to the end of your `.bashrc`:
 
 ```
-export PATH=$PATH:/path/to/smiler/
+export PATH=$PATH:[PATH TO SMILER]
 ```
 
 Another thing you might want to do is add your user to the `docker` group, so you do not have to type in the sudo password when running SMILER (run `sudo usermod -a -G docker [your username]`, and log out and back in again).
@@ -46,7 +46,7 @@ There are two main ways to run SMILER: The CLI (Command Line Interface), and the
 If you just want to run models with their default parameters, use:
 
 ```matlab
-./smiler run -m "aim,dgii" /path/to/input/dir /path/to/output/dir
+./smiler run -m "aim,dgii" [PATH TO INPUT DIRECTORY] [PATH TO OUTPUT DIRECTORY]
 ```
 
 The argument to `-m` can be the short names of models (e.g. `aim,dgii`) of a model collection (e.g. `docker`, `matlab`, `all`) or any combination of models and collections. Run `./smiler info` for a list of available models.

@@ -1,7 +1,7 @@
 {
     "name": "SAM",
     "long_name": "Saliency Attentive Model",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "notes": "Contains two variants: SAM-VGG (variant 0), and SAM-ResNet (variant 1).",
     "citation": "Cornia, M., Baraldi, L., Serra, G. and Cucchiara, R., (2018) \"Predicting human eye fixations via an LSTM-based saliency attentive model.\" in IEEE Transactions on Image Processing vol. 27, no. 10, pp. 5142-5154",
     "model_type": "docker",

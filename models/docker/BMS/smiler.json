@@ -1,7 +1,7 @@
 {
     "name": "BMS",
     "long_name": "Boolean Map based Saliency",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "citation": "Zhang, Jianming, and Stan Sclaroff. \"Saliency detection: A boolean map approach.\" Proceedings of the IEEE international conference on computer vision. 2013.",
     "notes": "This model's code has been built as part of the docker image. If you modify it, use the Dockerfile.BMS to build a new docker image locally.",
     "model_type": "docker",

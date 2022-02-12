@@ -1,7 +1,7 @@
 {
     "name": "DVAP",
     "long_name": "Deep Visual Attention Prediction",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "citation": "Wenguan Wang, Jianbing Shen \"Deep Visual Attention Prediction\" TIP (2018).",
     "model_type": "docker",
     "model_files": [

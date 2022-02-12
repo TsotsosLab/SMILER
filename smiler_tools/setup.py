@@ -16,7 +16,7 @@ setuptools.setup(
     install_requires=[
         'numpy',
         'scipy==1.2.1',
-        'pillow==5.1',
+        'pillow==9.0.0',
     ],
     classifiers=(
         "Programming Language :: Python :: 3",

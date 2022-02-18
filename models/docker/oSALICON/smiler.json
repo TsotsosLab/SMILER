@@ -1,8 +1,11 @@
 {
     "name": "oSALICON",
     "long_name": "OpenSALICON",
-    "version": "1.2.0",
-    "citation": "Thomas, Christopher. \"Opensalicon: An open source implementation of the salicon saliency model.\" arXiv preprint arXiv:1606.00110 (2016).",
+    "version": "1.3.0",
+    "citation": [
+        "X. Huang, C. Shen, X. Boix, and Q. Zhao, \"SALICON: Reducing the semantic gap in saliency prediction by adapting deep neural networks,\" in IEEE International Conference on Computer Vision (ICCV), 2015",
+        "C. Thomas. \"Opensalicon: An open source implementation of the salicon saliency model.\" arXiv preprint arXiv:1606.00110, 2016."
+    ],
     "model_type": "docker",
     "model_files": [
         "salicon_osie.caffemodel",

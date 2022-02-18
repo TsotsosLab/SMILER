@@ -78,7 +78,7 @@ else
     imsize(1) = params.im_height;
 end
 
-[out_w, out_h, ~] = size(input_image);
+[out_w, out_h, ~] = size(img);
 
 %% Calculating the Saliency Map
 salmap = mat2gray(spectral_saliency_multichannel(img,imsize,params.qss_method,smoothing_filter,cmap_smoothing_filter_params,params.channel_normalization,params,do_figures));

@@ -6,9 +6,7 @@
 %   Computing 30:51-64.
 %
 % Wrap code written by: Calden Wloka
-% NOTE: AWS does not have the complete source-code available, so it is
-% only supported in MATLAB versions older than 2017b and has few tunable
-% parameters
+% NOTE: AWS does not have the complete source-code available.
 %
 % * Function Syntax:
 % salmap = AWS_wrap(input_image, params)

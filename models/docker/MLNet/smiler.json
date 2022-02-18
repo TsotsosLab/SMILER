@@ -1,7 +1,7 @@
 {
     "name": "MLNet",
     "long_name": "Multi-Level Network for Saliency Prediction",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "citation": "Marcella Cornia, Lorenzo Baraldi, Giuseppe Serra, Rita Cucchiara. \"A Deep Multi-Level Network for Saliency Prediction.\" In Proceedings of the 23rd International Conference on Pattern Recognition, 2016.",
     "model_type": "docker",
     "model_files": [

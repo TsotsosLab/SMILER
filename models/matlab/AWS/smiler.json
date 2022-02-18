@@ -3,7 +3,7 @@
     "long_name": "Adaptive Whitening Saliency",
     "version": "1.1.0",
     "citation": "Garcia-Diaz, Antón, et al. \"Saliency from hierarchical adaptation through decorrelation and variance normalization.\" Image and Vision Computing 30.1 (2012): 51-64.",
-    "notes": "Relies on precompiled .p file; cannot be run with newer versions of MATLAB that lack the princomp function.",
+    "notes": "Relies on precompiled .p file.",
     "model_type": "matlab",
     "model_files": [],
     "parameters": {}

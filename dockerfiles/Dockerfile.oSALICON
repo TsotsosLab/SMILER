@@ -1,6 +1,6 @@
 FROM bvlc/caffe:gpu
 
-LABEL maintainer="Toni Kunic <tk@cse.yorku.ca>"
+LABEL maintainer="Calden Wloka <cwloka@hmc.edu>"
 
 ################################################################################
 ### Apt and pip dependencies

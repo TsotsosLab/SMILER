@@ -1,6 +1,6 @@
 FROM nvidia/cuda:8.0-cudnn5-devel
 
-LABEL maintainer="Toni Kunic <tk@cse.yorku.ca>"
+LABEL maintainer="Calden Wloka <cwloka@hmc.edu>"
 
 ################################################################################
 ### Apt and pip dependencies

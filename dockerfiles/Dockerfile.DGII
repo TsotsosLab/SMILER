@@ -1,6 +1,6 @@
 FROM tensorflow/tensorflow:1.12.0-gpu-py3
 
-LABEL maintainer="Toni Kunic <tk@cse.yorku.ca>"
+LABEL maintainer="Calden Wloka <cwloka@hmc.edu>"
 
 ################################################################################
 ### Apt and pip dependencies

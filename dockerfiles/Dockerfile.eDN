@@ -35,7 +35,15 @@ CMD ["/bin/bash"]
 ### Set up liblinear and sthor.
 
 RUN pip install --upgrade pip setuptools
-RUN pip install setuptools cython numpy scipy numexpr scikit-image liblinear hyperopt
+RUN pip install \
+  setuptools \
+  cython \
+  scipy==1.2.1 \
+  scikit-image==0.14.2 \
+  dask==1.2.0 \
+  numexpr \
+  liblinear \
+  hyperopt
 
 RUN mkdir /opt/dependencies && \
     cd /opt/dependencies && \

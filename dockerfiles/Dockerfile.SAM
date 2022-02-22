@@ -25,7 +25,8 @@ RUN pip3 install \
     h5py==2.8.0rc1 \
     opencv_python==3.3.0.10 \
     Keras==1.1.0 \
-    numpy==1.14.3
+    numpy==1.14.3 \
+    scipy==1.2.1
 
 RUN mkdir /root/.keras && \
   echo '{ \

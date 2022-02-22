@@ -1,7 +1,7 @@
 {
     "name": "DGII",
     "long_name": "DeepGaze II",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "citation": "Kümmerer, Matthias, Thomas SA Wallis, and Matthias Bethge. \"DeepGaze II: Reading fixations from deep features trained on object recognition.\" arXiv preprint arXiv:1610.01563 (2016).",
     "model_type": "docker",
     "model_files": [

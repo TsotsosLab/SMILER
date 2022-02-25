@@ -22,7 +22,7 @@ from smiler_tools.parameters import ParameterMap
 HERE_PATH = os.path.dirname(os.path.realpath(__file__))
 MATLAB_TOOLS_PATH = os.path.join(HERE_PATH, '..', '..', 'smiler_matlab_tools')
 
-MODEL_BASE_URL = "https://www.eecs.yorku.ca/rspace-jtfarm/SMILER/"
+MODEL_BASE_URL = "https://data.nvision.eecs.yorku.ca/smiler/"
 
 NO_NVIDIA_DOCKER_WARNING_MSG = """WARNING: nvidia-docker not found!
 See here for installation instructions:

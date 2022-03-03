@@ -2,7 +2,7 @@
 
 Welcome to SMILER for Windows!
 
-While SMILER is designed to be run on UNIX, there are some handy tips and tricks one can use to access SMILER functionality on a Windows machine. The process is not as seamless or as easy to set up as on a UNIX machine, so if you have access to a UNIX machine that would be a better option. If not, it is still possible to run all of the SMILER integrated models on a Windows machine, it just takes a little more playing around and setup.
+While SMILER is designed to be run on Linux, there are some handy tips and tricks one can use to access SMILER functionality on a Windows machine. The process is not as seamless or as easy to set up as on a Linux machine, so if you have access to a Linux machine that would be a better option. If not, it is still possible to run all of the SMILER integrated models on a Windows machine, it just takes a little more playing around and setup.
 
 SMILER has two main types of models, Docker-based models and MATLAB models. On a Linux machine both of these model categories can be run via the CLI, however, on Windows running these two categories of models has to be approached separately.
 

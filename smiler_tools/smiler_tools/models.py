@@ -6,7 +6,7 @@ import time
 import re
 import tempfile
 import zipfile
-import urllib
+import urllib.request
 import json
 import grp
 import getpass
@@ -22,7 +22,7 @@ from smiler_tools.parameters import ParameterMap
 HERE_PATH = os.path.dirname(os.path.realpath(__file__))
 MATLAB_TOOLS_PATH = os.path.join(HERE_PATH, '..', '..', 'smiler_matlab_tools')
 
-MODEL_BASE_URL = "https://www.eecs.yorku.ca/rspace-jtfarm/SMILER/"
+MODEL_BASE_URL = "https://data.nvision.eecs.yorku.ca/smiler/"
 
 NO_NVIDIA_DOCKER_WARNING_MSG = """WARNING: nvidia-docker not found!
 See here for installation instructions:
@@ -100,9 +100,8 @@ class SMILERModel(object):
         temp_file = "model.zip"
         temp_file_path = os.path.join(temp_dir_path, temp_file)
 
-        urlopener = urllib.URLopener()
         try:
-            urlopener.retrieve(url, temp_file_path)
+            urllib.request.urlretrieve(url, temp_file_path) 
             with zipfile.ZipFile(temp_file_path, 'r') as zip_fp:
                 zip_fp.extractall(os.path.join(self.path, "model"))
         except IOError as e:

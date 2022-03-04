@@ -16,6 +16,7 @@ To run the SMILER MATLAB models, unfortunately, there is no CLI integration due 
 
 ## Troubleshooting running SMILER on WSL 2
 
+### Line endings
 One possible error one might encounter when trying to run SMILER in WSL is an issue with the line endings of the files when trying to run Windows files in Linux.
 
 If you encounter the following error when trying to run SMILER you likely have a line ending issue: 
@@ -31,3 +32,6 @@ Then run the following command to convert your file endings to UNIX endings
 ```
 dos2unix **
 ```
+
+### Quotation mark errors
+When running SMILER from the CLI, it seems that it is picky about what type of quotation marks you use. So if your computer defaults to using “”, make sure to use "" to wrap your model names instead.

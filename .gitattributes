@@ -1,3 +1,5 @@
+# Keeps Linux line endings on push, no matter the OS being used.
+
 * text=auto eol=lf
 *.{cmd,[cC][mM][dD]} text eol=crlf
 *.{bat,[bB][aA][tT]} text eol=crlf

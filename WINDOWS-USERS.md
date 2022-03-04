@@ -28,7 +28,7 @@ To fix this, sudo install dos2unix using
 ```
 sudo apt install dos2unix
 ```
-Then run the following command to convert your file endings to UNIX endings
+Then run the following command to convert your file endings to Linux endings
 ```
 dos2unix **
 ```

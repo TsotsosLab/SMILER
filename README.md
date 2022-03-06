@@ -128,6 +128,17 @@ To get information about models from MATLAB (the equivalent of the CLI's `./smil
 >> [model_name]_wrap(image, [parameters])
 ```
 
+## SMILER for Windows
+While SMILER is designed to be run on Linux, it is possible to run SMILER on a Windows machine. On Windows running MATLAB vs. Docker models must be approached separately.
+
+### Running Docker models on Windows
+
+In order to run the SMILER Docker models on Windows SMILER needs to be run through a WSL 2 (Windows subsystem for Linux 2) distribution. Here is a guide for installing WSL 2: https://docs.docker.com/desktop/windows/wsl/. Using the WSL 2 terminal for your chosen distro will allow you to follow the SMILER CLI running procedure. Note: this only works for the non-MATLAB models.
+
+### Running MATLAB models on Windows
+
+To run the SMILER MATLAB models, unfortunately, there is no CLI integration due to compatibility issues with MATLAB Engine API for Python and WSL. Thus, to run the SMILER MATLAB models it is necessary to use the MATLAB interface.
+
 ## Contributing New Models
 
 To add additional models to SMILER, the easiest thing to do is to head over to the [model skeletons in the examples directory](examples/model_skeletons), copy one of the templates available there and fill it out following the instructions.

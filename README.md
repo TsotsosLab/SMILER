@@ -133,7 +133,7 @@ While SMILER is designed to be run on Linux, it is possible to run SMILER on a W
 
 ### Running Docker models on Windows
 
-In order to run the SMILER Docker models on Windows SMILER needs to be run through a WSL 2 (Windows subsystem for Linux 2) distribution. Here is a guide for installing WSL 2: https://docs.docker.com/desktop/windows/wsl/. Using the WSL 2 terminal for your chosen distro will allow you to follow the SMILER CLI running procedure. Note: this only works for the non-MATLAB models.
+In order to run the SMILER Docker models on Windows, SMILER needs to be run through a WSL 2 (Windows subsystem for Linux 2) distribution. Here is a guide for installing WSL 2: https://docs.docker.com/desktop/windows/wsl/. Using the WSL 2 terminal for your chosen distro will allow you to follow the SMILER CLI running procedure. Note: this only works for the non-MATLAB models.
 
 ### Running MATLAB models on Windows
 

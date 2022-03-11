@@ -4,10 +4,20 @@ Welcome to SMILER!
 
 The Saliency Model Implementation Library for Experimental Research (SMILER) is a software package which provides an open, standardized, and extensible framework for maintaining and executing computational saliency models. This work drastically reduces the human effort required to apply saliency algorithms to new tasks and datasets, while also ensuring consistency and procedural correctness for results and conclusions produced by different parties. At its launch SMILER already includes twenty three saliency models (fourteen models based in MATLAB and nine supported through containerization), and the open design of SMILER encourages this number to grow with future contributions from the community.
 
-The bundle code was written by:
+SMILER v2 is now in progress! The contributors are:
 
-- Calden Wloka (Current MATLAB maintainer)
-- Toni Kunic (Current Python maintainer)
+- Calden Wloka (Manager)
+- Andy Liu
+- Anirudh Satish
+- Clara McIntyre
+- Francine Wright
+- Richard Chang
+- Toni Kunic (Advisor)
+
+The bundle code for SMILER v1 was written by:
+
+- Calden Wloka (Current maintainer)
+- Toni Kunic
 - Iuliia Kotseruba
 - Ramin Fahimi
 - Nicholas Frosst

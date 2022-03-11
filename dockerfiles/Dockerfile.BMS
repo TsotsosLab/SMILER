@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-LABEL maintainer="Toni Kunic <tk@cse.yorku.ca>"
+LABEL maintainer="Calden Wloka <cwloka@hmc.edu>"
 
 ############################################################
 # NOTE: This container is special: its working directory   #

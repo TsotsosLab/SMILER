@@ -33,7 +33,7 @@ https://github.com/NVIDIA/nvidia-docker
 # Setup
 ############################################################
 
-if distutils.spawn.find_executable("docker"):
+if distutils.spawn.find_executable("nvidia-docker"):
     NVIDIA_DOCKER_INSTALLED = True
 else:
     NVIDIA_DOCKER_INSTALLED = False
@@ -131,12 +131,10 @@ class DockerModel(SMILERModel):
 
     def _run_in_shell(self, command, docker_or_sudo=True, verbose=False):
         if docker_or_sudo:
-            command = ["/usr/bin/sudo"] + command
-            # if getpass.getuser() in grp.getgrnam("docker").gr_mem:
-            #     pass
-            ##### SHOULD NOT THROW ERROR MAYBE FIX
-            # else:
-            #     command = ["/usr/bin/sudo"] + command
+            if getpass.getuser() in grp.getgrnam("docker").gr_mem:
+                pass
+            else:
+                command = ["/usr/bin/sudo"] + command
 
         if verbose:
             print("Running:\n{}".format(command))
@@ -162,7 +160,7 @@ class DockerModel(SMILERModel):
         parameter_map.update(experiment_parameter_map)
 
         model_run_command = [
-            "docker", "run", "-it", "--volume",
+            "nvidia-docker", "run", "-it", "--volume",
             "{}:/opt/model".format(model_dir), "--volume",
             "{}:/opt/input_vol".format(input_dir), "--volume",
             "{}:/opt/output_vol".format(output_dir), "--shm-size=128m", "-e",
@@ -180,7 +178,7 @@ class DockerModel(SMILERModel):
         model_dir = os.path.join(self.path, 'model')
 
         model_run_command = [
-            "docker", "run", "-it", "--volume",
+            "nvidia-docker", "run", "-it", "--volume",
             "{}:/opt/model".format(model_dir), "-w", "/opt/model", "--rm",
             self.docker_image
         ] + self.shell_command

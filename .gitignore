@@ -5,6 +5,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+outputImages/
 
 # C extensions
 *.so

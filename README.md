@@ -36,7 +36,7 @@ Much of the code base and datasets utilized in this bundle are not written by th
 pip install -r requirements.txt
 ```
 
-2. To be able to run MATLAB models, ensure the [MATLAB Python API](https://www.mathworks.com/help/matlab/matlab-engine-for-python.html) is installed.
+2. To be able to run MATLAB models, ensure the [MATLAB Python API](https://www.mathworks.com/help/matlab/matlab-engine-for-python.html) is installed. Here is a link to the wiki with [further information](https://github.com/TsotsosLab/SMILER/wiki/Tips-and-Tricks#installing-matlab-and-matlabengine) on how to get MATLAB and MATLAB.engine up and running and a link to the [Troubleshooting MATLAB Engine API for Python Installation guide](https://github.com/TsotsosLab/SMILER/wiki/Troubleshooting#troubleshooting-matlab-engine-api-for-python-installation)
 3. To be able to run Docker models, ensure [nvidia-docker2](https://github.com/NVIDIA/nvidia-docker) is installed.
 
 If you want to include `smiler` in your environment (so you can call `smiler` from any directory, instead of having to use `./smiler`), just add this to the end of your `.bashrc`:
@@ -129,7 +129,7 @@ To get information about models from MATLAB (the equivalent of the CLI's `./smil
 ```
 
 ## SMILER for Windows
-While SMILER is designed to be run on Linux, it is possible to run SMILER on a Windows machine. On Windows running MATLAB vs. Docker models must be approached separately.
+While SMILER is designed to be run on Linux, it is possible to run SMILER on a Windows machine. On Windows running MATLAB vs. Docker models must be approached separately. If experiencing difficulties getting SMILER up and running on Windows the [wiki troubleshooting guide](https://github.com/TsotsosLab/SMILER/wiki/Troubleshooting#troubleshooting-smiler-for-windows) might contain a solution.
 
 ### Running Docker models on Windows
 

@@ -68,6 +68,7 @@ def clean():
         line.split()[2] for line in output_str.strip().split('\n')[1:]
         if 'tsotsoslab/smiler_' in line
     ]
+    print(ids)
     rc = subprocess.call(['sudo', 'docker', 'rmi'] + ids)
 
     click.echo('Deleting downloaded files...')

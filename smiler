@@ -63,7 +63,7 @@ def download(models):
 def clean():
     """Deletes built images and downloaded files."""
     click.echo('Cleaning images...')
-    output_str = subprocess.check_output(['sudo', 'docker', 'images'])
+    output_str = str(subprocess.check_output(['sudo', 'docker', 'images']))
     ids = [
         line.split()[2] for line in output_str.strip().split('\n')[1:]
         if 'tsotsoslab/smiler_' in line

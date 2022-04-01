@@ -36,7 +36,7 @@ Much of the code base and datasets utilized in this bundle are not written by th
 pip install -r requirements.txt
 ```
 
-2. To be able to run MATLAB models, ensure the [MATLAB Python API](https://www.mathworks.com/help/matlab/matlab-engine-for-python.html) is installed.
+2. To be able to run MATLAB models, ensure the [MATLAB Python API](https://www.mathworks.com/help/matlab/matlab-engine-for-python.html) is installed. Here is a link to the wiki with [further information](https://github.com/TsotsosLab/SMILER/wiki/Tips-and-Tricks#installing-matlab-and-matlabengine) on how to get MATLAB and MATLAB.engine up and running and a link to the [Troubleshooting MATLAB Engine API for Python Installation guide](https://github.com/TsotsosLab/SMILER/wiki/Troubleshooting#troubleshooting-matlab-engine-api-for-python-installation)
 3. To be able to run Docker models, ensure [nvidia-docker2](https://github.com/NVIDIA/nvidia-docker) is installed.
 
 If you want to include `smiler` in your environment (so you can call `smiler` from any directory, instead of having to use `./smiler`), just add this to the end of your `.bashrc`:
@@ -51,7 +51,7 @@ Another thing you might want to do is add your user to the `docker` group, so yo
 
 There are two main ways to run SMILER: The CLI (Command Line Interface), and the MATLAB interface. The CLI is the preferred method of running models, since it can run all SMILER models, whereas the MATLAB interface can only run MATLAB models.
 
-### Using the CLI
+### <a name="cli">Using the CLI</a>
 
 If you just want to run models with their default parameters, use:
 
@@ -97,7 +97,7 @@ And running it like so:
 For additional information on SMILER CLI usage, append `--help` to any SMILER command.
 
 
-### Using the MATLAB Interface
+### <a name="matlab">Using the MATLAB Interface</a>
 
 If you only wish to run the MATLAB models without using the CLI, and don't care about containerized models, navigate to the `smiler_matlab_tools` directory in MATLAB, and run `iSMILER.m`. After that, you can invoke models in the following way:
 
@@ -127,6 +127,17 @@ To get information about models from MATLAB (the equivalent of the CLI's `./smil
 ```
 >> [model_name]_wrap(image, [parameters])
 ```
+
+## SMILER for Windows
+While SMILER is designed to be run on Linux, it is possible to run SMILER on a Windows machine. On Windows running MATLAB vs. Docker models must be approached separately. If experiencing difficulties getting SMILER up and running on Windows the [wiki troubleshooting guide](https://github.com/TsotsosLab/SMILER/wiki/Troubleshooting#troubleshooting-smiler-for-windows) might contain a solution.
+
+### Running Docker models on Windows
+
+In order to run the SMILER Docker models on Windows, SMILER needs to be run through a WSL 2 (Windows subsystem for Linux 2) distribution. Here is a guide for installing WSL 2: https://docs.docker.com/desktop/windows/wsl/. Using the WSL 2 terminal for your chosen distro will allow you to follow the Linux [SMILER CLI running procedure](#cli).
+
+### Running MATLAB models on Windows
+
+To run the SMILER MATLAB models, unfortunately, there is no CLI integration due to compatibility issues with MATLAB Engine API for Python and WSL. Thus, to run the SMILER MATLAB models it is necessary to use the [MATLAB interface](#matlab).
 
 ## Contributing New Models
 

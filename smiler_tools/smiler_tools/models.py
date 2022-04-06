@@ -24,19 +24,19 @@ MATLAB_TOOLS_PATH = os.path.join(HERE_PATH, '..', '..', 'smiler_matlab_tools')
 
 MODEL_BASE_URL = "https://data.nvision.eecs.yorku.ca/smiler/"
 
-NO_NVIDIA_DOCKER_WARNING_MSG = """WARNING: nvidia-docker not found!
+NO_DOCKER_WARNING_MSG = """WARNING: docker not found!
 See here for installation instructions:
-https://github.com/NVIDIA/nvidia-docker
+https://docs.docker.com/get-docker/ 
 """
 
 ############################################################
 # Setup
 ############################################################
 
-if distutils.spawn.find_executable("nvidia-docker"):
-    NVIDIA_DOCKER_INSTALLED = True
+if distutils.spawn.find_executable("docker"):
+    DOCKER_INSTALLED = True
 else:
-    NVIDIA_DOCKER_INSTALLED = False
+    DOCKER_INSTALLED = False
 
 ############################################################
 # Smiler Models
@@ -131,10 +131,7 @@ class DockerModel(SMILERModel):
 
     def _run_in_shell(self, command, docker_or_sudo=True, verbose=False):
         if docker_or_sudo:
-            if getpass.getuser() in grp.getgrnam("docker").gr_mem:
-                pass
-            else:
-                command = ["/usr/bin/sudo"] + command
+            command = ["/usr/bin/sudo"] + command
 
         if verbose:
             print("Running:\n{}".format(command))
@@ -146,8 +143,8 @@ class DockerModel(SMILERModel):
                   output_dir,
                   config_parameter_map,
                   experiment_parameter_map=None):
-        if not NVIDIA_DOCKER_INSTALLED:
-            print(NO_NVIDIA_DOCKER_WARNING_MSG)
+        if not DOCKER_INSTALLED:
+            print(NO_DOCKER_WARNING_MSG)
             print("Skipping...")
             return
 
@@ -160,7 +157,7 @@ class DockerModel(SMILERModel):
         parameter_map.update(experiment_parameter_map)
 
         model_run_command = [
-            "nvidia-docker", "run", "-it", "--volume",
+            "docker", "run", "-it", "--volume",
             "{}:/opt/model".format(model_dir), "--volume",
             "{}:/opt/input_vol".format(input_dir), "--volume",
             "{}:/opt/output_vol".format(output_dir), "--shm-size=128m", "-e",
@@ -171,14 +168,14 @@ class DockerModel(SMILERModel):
         return self._run_in_shell(model_run_command)
 
     def shell(self):
-        if not NVIDIA_DOCKER_INSTALLED:
-            print(NO_NVIDIA_DOCKER_WARNING_MSG)
+        if not DOCKER_INSTALLED:
+            print(NO_DOCKER_WARNING_MSG)
             return
 
         model_dir = os.path.join(self.path, 'model')
 
         model_run_command = [
-            "nvidia-docker", "run", "-it", "--volume",
+            "docker", "run", "-it", "--volume",
             "{}:/opt/model".format(model_dir), "-w", "/opt/model", "--rm",
             self.docker_image
         ] + self.shell_command

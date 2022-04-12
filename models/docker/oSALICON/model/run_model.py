@@ -6,11 +6,17 @@ import numpy as np
 
 os.environ['GLOG_minloglevel'] = '3'  # Suppress logging.
 
-from smiler_tools.runner import run_model
+from smiler_tools.runner import run_model, update_docker_image
 
 from Salicon import Salicon
 
+MODEL_NAME = 'oSALICON'
+CPU_LINE = 'FROM bvlc/caffe'
+GPU_LINE = 'FROM bvlc/caffe:gpu'
+
 if __name__ == "__main__":
+    
+    update_docker_image(MODEL_NAME, GPU_LINE, CPU_LINE)
     sal = Salicon()
 
     def compute_saliency(image_path):

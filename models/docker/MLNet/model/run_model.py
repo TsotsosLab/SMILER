@@ -16,14 +16,9 @@ from config import *
 from utilities import preprocess_images, preprocess_maps, postprocess_predictions
 from model import ml_net_model, loss
 
-from smiler_tools.runner import run_model, update_docker_image
-
-MODEL_NAME = 'MLNet'
-CPU_LINE = 'RUN echo "[global]\ndevice=cpu\nfloatX=float32\n[nvcc]\nfastmath=True" > /root/.theanorc'
-GPU_LINE = 'RUN echo "[global]\ndevice=gpu\nfloatX=float32\n[nvcc]\nfastmath=True" > /root/.theanorc'
+from smiler_tools.smiler_tools.runner import run_model
 
 if __name__ == '__main__':
-    update_docker_image(MODEL_NAME, GPU_LINE, CPU_LINE)
     options = json.loads(os.environ['SMILER_PARAMETER_MAP'])
     use_default_center_bias = options.get('center_prior',
                                           'default') == 'default'

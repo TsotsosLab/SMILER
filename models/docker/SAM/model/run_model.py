@@ -14,14 +14,10 @@ from config import *
 from utilities import preprocess_images, preprocess_maps, preprocess_fixmaps, postprocess_predictions
 from models import sam_vgg, sam_resnet, kl_divergence, correlation_coefficient, nss
 
-from smiler_tools.runner import run_model, update_docker_image
-
-MODEL_NAME = 'SAM'
-CPU_LINE = 'RUN echo "[global]\ndevice=cpu\nfloatX=float32\n[nvcc]\nfastmath=True" > /root/.theanorc'
-GPU_LINE = 'RUN echo "[global]\ndevice=gpu\nfloatX=float32\n[nvcc]\nfastmath=True" > /root/.theanorc'
+from smiler_tools.runner import run_model
 
 def main():
-    update_docker_image(MODEL_NAME, GPU_LINE, CPU_LINE)
+    print('in main')
     options = json.loads(os.environ['SMILER_PARAMETER_MAP'])
     network_string = options.get('network', 'SAM-VGG')
     use_default_center_bias = options.get('center_prior',

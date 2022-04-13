@@ -13,25 +13,6 @@ import GPUtil
 from smiler_tools import utils
 from smiler_tools import image_processing
 
-def update_docker_image(model, gpustr, cpustr):
-    docker_image = 'dockerfiles/Dockerfile.' + model
-    if GPUtil.getAvailable() == []:
-        
-        with open(docker_image, 'r') as dockerfile :
-            filedata = dockerfile.read()
-            filedata = filedata.replace(gpustr, cpustr)
-
-        with open(docker_image, 'w') as dockerfile:
-            dockerfile.write(filedata)
-    else:
-        with open(docker_image, 'r') as dockerfile:
-            filedata = dockerfile.read()
-            filedata = filedata.replace(cpustr, gpustr)
-
-        with open(docker_image, 'w') as dockerfile:
-            dockerfile.write(filedata)
-
-
 def run_model(compute_saliency,
               input_dir='/opt/input_vol/',
               output_dir='/opt/output_vol/'):
@@ -95,3 +76,4 @@ def run_model(compute_saliency,
                 post_processed_image,
                 uid=target_uid,
                 gid=target_gid)
+

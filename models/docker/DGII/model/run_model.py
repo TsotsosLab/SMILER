@@ -17,14 +17,9 @@ import cv2
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Suppress logging.
 import tensorflow as tf
 
-from smiler_tools.runner import run_model, update_docker_image
-
-MODEL_NAME = 'DGII'
-CPU_LINE = 'FROM tensorflow/tensorflow:1.12.0-py3'
-GPU_LINE = 'FROM tensorflow/tensorflow:1.12.0-gpu-py3'
+from smiler_tools.runner import run_model
 
 def main():
-    update_docker_image(MODEL_NAME, GPU_LINE, CPU_LINE)
     options = json.loads(os.environ['SMILER_PARAMETER_MAP'])
     center_bias_path = 'centerbias.npy'
     use_center_bias = options.get('center_prior', 'default') == 'default'

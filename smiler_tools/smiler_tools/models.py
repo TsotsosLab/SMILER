@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+from stat import FILE_ATTRIBUTE_NO_SCRUB_DATA
 import subprocess
 import time
 
@@ -14,6 +15,7 @@ import distutils.spawn
 
 from smiler_tools import utils
 from smiler_tools.parameters import ParameterMap
+import GPUtil
 
 ############################################################
 # Constants
@@ -185,6 +187,39 @@ class DockerModel(SMILERModel):
     def pull_latest_image(self):
         pull_image_command = ["docker", "pull", self.docker_image]
         return self._run_in_shell(pull_image_command)
+    
+    def update_docker_image(self):
+        # need to update cpu_strs, gpu_strs, and the list in the self.name check below to add new models
+        cpu_strs = {'DGII':'tensorflow:1.12.0-py3',
+                    'MLNet':'cpu',
+                    'SAM':'cpu',
+                    'oSALICON':'bvlc/caffe'}
+        gpu_strs = {'DGII':'tensorflow:1.12.0-gpu-py3',
+                    'MLNet':'gpu',
+                    'SAM':'gpu',
+                    'oSALICON':'bvlc/caffe/gpu'}
+        
+        if self.name in ['DGII', 'oSALICON', 'MLNet', 'SAM']:
+            docker_image = 'dockerfiles/Dockerfile.' + self.name
+            gpustr = gpu_strs[self.name]
+            cpustr = cpu_strs[self.name]
+            print('updating image ' + docker_image)
+            if GPUtil.getAvailable() == []: # no available GPUs
+                print('changing to cpu')
+                with open(docker_image, 'r') as dockerfile:
+                    filedata = dockerfile.read()
+                    filedata = filedata.replace(gpustr, cpustr)
+                    print(filedata)
+
+                with open(docker_image, 'w') as dockerfile:
+                    dockerfile.write(filedata)
+            else:
+                with open(docker_image, 'r') as dockerfile:
+                    filedata = dockerfile.read()
+                    filedata = filedata.replace(cpustr, gpustr)
+
+                with open(docker_image, 'w') as dockerfile:
+                    dockerfile.write(filedata)
 
 
 class MATLABModel(SMILERModel):

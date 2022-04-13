@@ -131,10 +131,7 @@ class DockerModel(SMILERModel):
 
     def _run_in_shell(self, command, docker_or_sudo=True, verbose=False):
         if docker_or_sudo:
-            if getpass.getuser() in grp.getgrnam("docker").gr_mem:
-                pass
-            else:
-                command = ["/usr/bin/sudo"] + command
+            command = ["/usr/bin/sudo"] + command
 
         if verbose:
             print("Running:\n{}".format(command))
@@ -160,7 +157,7 @@ class DockerModel(SMILERModel):
         parameter_map.update(experiment_parameter_map)
 
         model_run_command = [
-            "nvidia-docker", "run", "-it", "--volume",
+            "docker", "run", "-it", "--volume",
             "{}:/opt/model".format(model_dir), "--volume",
             "{}:/opt/input_vol".format(input_dir), "--volume",
             "{}:/opt/output_vol".format(output_dir), "--shm-size=128m", "-e",

@@ -4,6 +4,7 @@
 SMILER: Saliency Model Implementation Library for Experimental Research.
 """
 
+from email.policy import default
 import sys
 import os
 import subprocess
@@ -21,7 +22,7 @@ from smiler_tools import utils
 model_manager = ModelManager(os.path.join(HERE_PATH, "models"))
 config = SmilerConfig(os.path.join(HERE_PATH, "config.json"))
 
-if os.getuid() is 0:
+if os.getuid() == 0:
     print("ERROR: Don't run SMILER as root!")
     exit(10)
 
@@ -57,23 +58,35 @@ def download(models):
 
 
 @cli.command()
+@click.option('--model', 
+    type=click.Choice(['bms', 'dgii', 'dvap', 'edn', 'icf', 'mlnet', 'osalicon', 'salgan', 'sam'], 
+    case_sensitive=False), required=False, help='Choose a specific model to clean.')
 @click.confirmation_option(
     prompt=
-    "Are you sure you want to delete all Docker images and downloaded files?")
-def clean():
+    "Are you sure you want to delete Docker images and downloaded files?")
+def clean(model):
     """Deletes built images and downloaded files."""
     click.echo('Cleaning images...')
-    output_str = str(subprocess.check_output(['sudo', 'docker', 'images']))
+    output_str = subprocess.check_output(['sudo', 'docker', 'images']).decode("utf-8")
+    if not model:
+        model = ''
     ids = [
         line.split()[2] for line in output_str.strip().split('\n')[1:]
-        if 'tsotsoslab/smiler_' in line
+        if 'tsotsoslab/smiler_' + model in line
     ]
-    print(ids)
-    rc = subprocess.call(['sudo', 'docker', 'rmi'] + ids)
+
+    if len(ids) == 0:
+        click.echo('No Docker images found to delete.')
+    else:
+        rc = subprocess.call(['sudo', 'docker', 'rmi'] + ids)
 
     click.echo('Deleting downloaded files...')
-    for model in model_manager.get_matching('all'):
-        model.remove_model_files()
+    if model == '':
+        for curr_model in model_manager.get_matching('all'):
+            curr_model.remove_model_files()
+    else:
+        [curr_model] = model_manager.get_matching(model)
+        curr_model.remove_model_files()
 
 
 ########################################

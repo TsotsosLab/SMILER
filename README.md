@@ -32,9 +32,9 @@ Much of the code base and datasets utilized in this bundle are not written by th
 
 ## <a name="wm">SMILER Working Models</a>
 + All MATLAB models work besides AWS.
-+ BMS, ICF, and SalGAN all work CPU or GPU.
++ BMS and SalGAN work with CPU or GPU.
 + SAM works only on CPU
-+ oSALICON, eDN, DVAP, MLNet, DGII currently do not work on CPU or GPU. For more information on why these models do not work refer to the [SMILER Issues tab](https://github.com/TsotsosLab/SMILER/issues)
++ oSALICON, eDN, DVAP, MLNet, DGII, and ICF currently do not work on CPU or GPU. For more information on why these models do not work refer to the [SMILER Issues tab](https://github.com/TsotsosLab/SMILER/issues)
 
 ## Installation
 

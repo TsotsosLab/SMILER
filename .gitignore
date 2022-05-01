@@ -124,6 +124,4 @@ cscope.po.out
 
 hack
 profile
-experiment.yaml
-dockerfiles/Dockerfile.SAM
-dockerfiles/Dockerfile.SAM
+output_images/*

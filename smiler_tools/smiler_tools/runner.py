@@ -8,7 +8,6 @@ import json
 
 import scipy.misc
 import PIL
-import GPUtil
 
 from smiler_tools import utils
 from smiler_tools import image_processing

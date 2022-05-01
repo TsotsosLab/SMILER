@@ -16,7 +16,7 @@ from config import *
 from utilities import preprocess_images, preprocess_maps, postprocess_predictions
 from model import ml_net_model, loss
 
-from smiler_tools.smiler_tools.runner import run_model
+from smiler_tools.runner import run_model
 
 if __name__ == '__main__':
     options = json.loads(os.environ['SMILER_PARAMETER_MAP'])

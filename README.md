@@ -1,10 +1,12 @@
 # SMILER
 
-Welcome to SMILER!
+Welcome to SMILER 2.0!
 
 The Saliency Model Implementation Library for Experimental Research (SMILER) is a software package which provides an open, standardized, and extensible framework for maintaining and executing computational saliency models. This work drastically reduces the human effort required to apply saliency algorithms to new tasks and datasets, while also ensuring consistency and procedural correctness for results and conclusions produced by different parties. At its launch SMILER already includes twenty three saliency models (fourteen models based in MATLAB and nine supported through containerization), and the open design of SMILER encourages this number to grow with future contributions from the community.
 
-SMILER v2 is now in progress! The contributors are:
+With SMILER version 2.0 support for [Windows](#windows) and [Mac](#linux) has been added. Additionally, SMILER now offers CPU support in additon to GPU support for the deep learning models available. In the transition process from SMILER 1.0 to 2.0, many models have been found to not work or only work under certain conditions. Please refer to the [working models](#wm) section to learn about the models currently supported.
+
+SMILER v2 contributors are:
 
 - Calden Wloka (Manager)
 - Andy Liu
@@ -28,6 +30,12 @@ If you use this code in your work, please cite the paper on which this work was 
 
 Much of the code base and datasets utilized in this bundle are not written by the bundle developers, and are instead owned by the individual researchers who originally developed and released the code. For each algorithm, dataset, or evaluation metric you use from the bundle, you should also cite the original work for which that particular component was developed. This bibliographic information can be accessed via the command `smiler info [model name]`.
 
+## <a name="wm">SMILER Working Models</a>
++ All MATLAB models work besides AWS.
++ BMS and SalGAN work with CPU or GPU.
++ SAM works only on CPU
++ oSALICON, eDN, DVAP, MLNet, DGII, and ICF currently do not work on CPU or GPU. For more information on why these models do not work refer to the [SMILER Issues tab](https://github.com/TsotsosLab/SMILER/issues)
+
 ## Installation
 
 1. To install SMILER's prerequisites, run:
@@ -42,12 +50,12 @@ pip install -r requirements.txt
 If you want to include `smiler` in your environment (so you can call `smiler` from any directory, instead of having to use `./smiler`), just add this to the end of your `.bashrc`:
 
 ```
-export PATH=$PATH:/path/to/smiler/
+export PATH=$PATH:[PATH TO SMILER]
 ```
 
 Another thing you might want to do is add your user to the `docker` group, so you do not have to type in the sudo password when running SMILER (run `sudo usermod -a -G docker [your username]`, and log out and back in again).
 
-## Running SMILER
+## <a name="linux">Running SMILER</a>
 
 There are two main ways to run SMILER: The CLI (Command Line Interface), and the MATLAB interface. The CLI is the preferred method of running models, since it can run all SMILER models, whereas the MATLAB interface can only run MATLAB models.
 
@@ -56,7 +64,7 @@ There are two main ways to run SMILER: The CLI (Command Line Interface), and the
 If you just want to run models with their default parameters, use:
 
 ```matlab
-./smiler run -m "aim,dgii" /path/to/input/dir /path/to/output/dir
+./smiler run -m "aim,dgii" [PATH TO INPUT DIRECTORY] [PATH TO OUTPUT DIRECTORY]
 ```
 
 The argument to `-m` can be the short names of models (e.g. `aim,dgii`) of a model collection (e.g. `docker`, `matlab`, `all`) or any combination of models and collections. Run `./smiler info` for a list of available models.
@@ -128,7 +136,7 @@ To get information about models from MATLAB (the equivalent of the CLI's `./smil
 >> [model_name]_wrap(image, [parameters])
 ```
 
-## SMILER for Windows
+## <a name="windows">SMILER for Windows</a>
 While SMILER is designed to be run on Linux, it is possible to run SMILER on a Windows machine. On Windows running MATLAB vs. Docker models must be approached separately. If experiencing difficulties getting SMILER up and running on Windows the [wiki troubleshooting guide](https://github.com/TsotsosLab/SMILER/wiki/Troubleshooting#troubleshooting-smiler-for-windows) might contain a solution.
 
 ### Running Docker models on Windows

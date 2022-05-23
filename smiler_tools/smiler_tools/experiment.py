@@ -104,6 +104,8 @@ class ExperimentRun(object):
         utils.print_pretty_header(self._model.name)
 
         print("Setting up model...")
+        
+        self._model.update_docker_image()
         self._model.maybe_run_setup()
 
         my_run_map = experiment_parameter_map.clone()

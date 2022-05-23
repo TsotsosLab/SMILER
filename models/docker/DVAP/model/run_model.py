@@ -7,6 +7,7 @@ import os
 import sys
 import time
 import cv2
+import GPUtil
 
 sys.path.insert(0, '/opt/caffe/python')
 
@@ -28,10 +29,11 @@ def prepare_image(img):
 
 
 def main():
+    if GPUtil.getAvailable() != []:
     #remove the following two lines if testing with cpu
-    caffe.set_mode_gpu()
-    # choose which GPU you want to use
-    caffe.set_device(0)
+        caffe.set_mode_gpu()
+        # choose which GPU you want to use
+        caffe.set_device(0)
     caffe.SGDSolver.display = 0
     # load net
     net = caffe.Net('models/attention_test.prototxt', 'models/attention_final',

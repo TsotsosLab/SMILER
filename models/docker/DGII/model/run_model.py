@@ -19,12 +19,11 @@ import tensorflow as tf
 
 from smiler_tools.runner import run_model
 
-
 def main():
     options = json.loads(os.environ['SMILER_PARAMETER_MAP'])
     center_bias_path = 'centerbias.npy'
     use_center_bias = options.get('center_prior', 'default') == 'default'
-
+    
     # load precomputed log density over a 1024x1024 image
     centerbias_template = np.load(center_bias_path)
 

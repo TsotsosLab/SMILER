@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+from stat import FILE_ATTRIBUTE_NO_SCRUB_DATA
 import subprocess
 import time
 
@@ -14,6 +15,7 @@ import distutils.spawn
 
 from smiler_tools import utils
 from smiler_tools.parameters import ParameterMap
+import GPUtil
 
 ############################################################
 # Constants
@@ -156,15 +158,27 @@ class DockerModel(SMILERModel):
         parameter_map.update(self.parameter_map)
         parameter_map.update(experiment_parameter_map)
 
-        model_run_command = [
-            "docker", "run", "-it", "--volume",
-            "{}:/opt/model".format(model_dir), "--volume",
-            "{}:/opt/input_vol".format(input_dir), "--volume",
-            "{}:/opt/output_vol".format(output_dir), "--shm-size=128m", "-e",
-            "SMILER_PARAMETER_MAP={}".format(
-                json.dumps(
-                    parameter_map.get_pair_dict())), "--rm", self.docker_image
-        ] + self.run_command
+        if GPUtil.getAvailable() == [] or self.name == "SAM": # no available GPUs (and SAM hardcoded CPU)
+            model_run_command = [
+                "docker", "run", "-it", "--volume",
+                "{}:/opt/model".format(model_dir), "--volume",
+                "{}:/opt/input_vol".format(input_dir), "--volume",
+                "{}:/opt/output_vol".format(output_dir), "--shm-size=128m", "-e",
+                "SMILER_PARAMETER_MAP={}".format(
+                    json.dumps(
+                        parameter_map.get_pair_dict())), "--rm", self.docker_image
+            ] + self.run_command
+            
+        else:
+            model_run_command = [
+                "docker", "run", "-it", "--gpus", "all", "--volume",
+                "{}:/opt/model".format(model_dir), "--volume",
+                "{}:/opt/input_vol".format(input_dir), "--volume",
+                "{}:/opt/output_vol".format(output_dir), "--shm-size=128m", "-e",
+                "SMILER_PARAMETER_MAP={}".format(
+                    json.dumps(
+                        parameter_map.get_pair_dict())), "--rm", self.docker_image
+            ] + self.run_command     
         return self._run_in_shell(model_run_command)
 
     def shell(self):
@@ -185,6 +199,37 @@ class DockerModel(SMILERModel):
     def pull_latest_image(self):
         pull_image_command = ["docker", "pull", self.docker_image]
         return self._run_in_shell(pull_image_command)
+    
+    def update_docker_image(self):
+        # need to update cpu_strs, gpu_strs, and the list in the self.name check below to add new models
+        cpu_strs = {'DGII':'tensorflow:1.12.0-py3-none-any',
+                    'MLNet':'cpu',
+                    'SAM':'cpu',
+                    'oSALICON':'bvlc/caffe'}
+        gpu_strs = {'DGII':'tensorflow:1.12.0-gpu-py3',
+                    'MLNet':'gpu',
+                    'SAM':'gpu',
+                    'oSALICON':'bvlc/caffe/gpu'}
+        
+        if self.name in ['DGII', 'oSALICON', 'MLNet', 'SAM']:
+            docker_image = 'dockerfiles/Dockerfile.' + self.name
+            gpustr = gpu_strs[self.name]
+            cpustr = cpu_strs[self.name]
+            if GPUtil.getAvailable() == [] or self.name == 'SAM': # no available GPUs or SAM (hardcoded CPU)
+                print('changing to cpu')
+                with open(docker_image, 'r') as dockerfile:
+                    filedata = dockerfile.read()
+                    filedata = filedata.replace(gpustr, cpustr)
+
+                with open(docker_image, 'w') as dockerfile:
+                    dockerfile.write(filedata)
+            else:
+                with open(docker_image, 'r') as dockerfile:
+                    filedata = dockerfile.read()
+                    filedata = filedata.replace(cpustr, gpustr)
+
+                with open(docker_image, 'w') as dockerfile:
+                    dockerfile.write(filedata)
 
 
 class MATLABModel(SMILERModel):

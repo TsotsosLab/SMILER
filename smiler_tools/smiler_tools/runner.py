@@ -12,7 +12,6 @@ import PIL
 from smiler_tools import utils
 from smiler_tools import image_processing
 
-
 def run_model(compute_saliency,
               input_dir='/opt/input_vol/',
               output_dir='/opt/output_vol/'):
@@ -76,3 +75,4 @@ def run_model(compute_saliency,
                 post_processed_image,
                 uid=target_uid,
                 gid=target_gid)
+

@@ -16,7 +16,6 @@ from models import sam_vgg, sam_resnet, kl_divergence, correlation_coefficient, 
 
 from smiler_tools.runner import run_model
 
-
 def main():
     options = json.loads(os.environ['SMILER_PARAMETER_MAP'])
     network_string = options.get('network', 'SAM-VGG')

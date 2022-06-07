@@ -58,7 +58,7 @@ def download(models):
 
 
 @cli.command()
-@click.option('--model', 
+@click.option('-m', '--model', 
     type=click.Choice(['bms', 'dgii', 'dvap', 'edn', 'icf', 'mlnet', 'osalicon', 'salgan', 'sam'], 
     case_sensitive=False), required=False, help='Choose a specific model to clean.')
 @click.confirmation_option(

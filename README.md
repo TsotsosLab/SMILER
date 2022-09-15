@@ -7,12 +7,18 @@ The Saliency Model Implementation Library for Experimental Research (SMILER) is 
 SMILER v2 is now in progress! The contributors are:
 
 - Calden Wloka (Manager)
+- Toni Kunic (Advisor)
+
+Fall 2022:
+- Jade Kessinger
+- Emily Lee
+
+Spring 2022:
 - Andy Liu
 - Anirudh Satish
 - Clara McIntyre
 - Francine Wright
 - Richard Chang
-- Toni Kunic (Advisor)
 
 The bundle code for SMILER v1 was written by:
 

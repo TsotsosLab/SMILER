@@ -35,6 +35,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 ################################################################################
+### gputil for CPU/GPU toggling
+RUN pip install gputil
+
+################################################################################
 ### @wenguanwang's implementation depends on HED's caffe.
 
 COPY models/docker/DVAP/model/Makefile.config /opt/Makefile.config

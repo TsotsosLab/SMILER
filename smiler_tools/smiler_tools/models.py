@@ -202,7 +202,7 @@ class DockerModel(SMILERModel):
     
     def update_docker_image(self):
         # need to update cpu_strs, gpu_strs, and the list in the self.name check below to add new models
-        cpu_strs = {'DGII':'tensorflow:1.12.0-py3-none-any',
+        cpu_strs = {'DGII':'tensorflow:1.12.0-py3',
                     'MLNet':'cpu',
                     'SAM':'cpu',
                     'oSALICON':'bvlc/caffe'}

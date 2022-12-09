@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 RUN cd /tmp && \
-    wget https://bootstrap.pypa.io/get-pip.py && \
+    wget https://bootstrap.pypa.io/pip/2.7/get-pip.py && \
     python get-pip.py
 
 RUN pip install \

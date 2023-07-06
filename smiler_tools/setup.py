@@ -15,7 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires=[
         'numpy',
-        'scipy==1.2.1',
+        'scipy==1.10.0',
         'pillow==5.1',
     ],
     classifiers=(
